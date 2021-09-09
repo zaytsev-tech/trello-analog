@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+}
+
+.page-style {
+    margin: 2rem;
+}
+
+.trello-column {
+    border: #000 solid 1px;
+    border-radius: 5px;
+    background: #dadada;
+    color: #172b4d;
+}
+
+.trello-column > h3 {
+    cursor: pointer;
+}
+
+.trello-column-footer {
+    cursor: pointer;
+    color: #797979;
+}
