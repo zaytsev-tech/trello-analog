@@ -17,7 +17,44 @@ body {
     cursor: pointer;
 }
 
-.trello-column-footer {
+.footer-controller {
     cursor: pointer;
     color: #797979;
+    margin: 10px;
+}
+
+.controller-active {
+    background: blue;
+    color:#fff;
+    border-radius: 3px;
+    margin: 3px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.column-card {
+    background: #fff;
+    border: 1px solid;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 10px auto;
+}
+
+.column-card-footer {
+    font-size: 10px;
+    color: #7a7a7a;
+}
+
+.close-input-name {
+    margin: 5px;
+    color: #7a7a7a;
+    font-weight: 600;
+}
+
+.close-input-name:hover {
+    color: black;
+}
+
+.close-input-name:after {
+    content: 'X';
 }
