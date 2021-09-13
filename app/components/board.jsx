@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { OpenPopup } from './popupSettings.jsx';
 import '../../styles/style.css';
 
 const defaultCard = { 
@@ -24,6 +25,16 @@ class Column extends Component {
                       cards: []}
     }
 
+    // updateStorage(prevName, curName) {
+    //     let parseLocalCards = JSON.parse(localStorage.cards);
+    //     let newLocalCards = parseLocalCards.map((elem) => {
+    //         if(elem.column == prevName) {
+    //             elem.column = curName;
+    //         }
+    //     });
+    //     localStorage.cards = JSON.stringify(newLocalCards);
+    // }
+
     changeName(event) {
         let currentText = event.target.innerHTML;
         event.target.innerHTML = "";
@@ -33,12 +44,12 @@ class Column extends Component {
         inputText.onblur = function() {
             if(inputText.value.length != 0) {
                 event.target.innerHTML = inputText.value;
+                this.setState({name: inputText.value})
                 inputText.remove();
             } else {
                 alert('Введите название колонки');
             }
-        }
-        this.setState({name: event.target.value, innerColumn: "innerColumn"+event.target.value})
+        }.bind(this);
     }
 
     addCard(event) {
@@ -58,8 +69,8 @@ class Column extends Component {
         return (
         <div className="col-4 container trello-column">
             <ColumnHeader changeName={this.changeName} currentName={this.state.name} />
-            <ColumnList cards={this.state.cards} />
-            <ColumnFooter addcard={this.addCard} />
+            <ColumnList cards={this.state.cards} column={this.state.name}/>
+            <ColumnFooter addcard={this.addCard} createcard={this.state.cards} />
         </div>
         );
     }
@@ -87,6 +98,7 @@ class ColumnList extends Component {
         cards.push(
             <ColumnCard
                     name={card.name}
+                    column={this.props.column}
                     countcomment={card.comments.length} />
         )
     });
@@ -105,7 +117,7 @@ class ColumnFooter extends Component {
         this.showInputName = this.showInputName.bind(this);
         this.closeInputName = this.closeInputName.bind(this);
         this.state = {
-            showClose: this.props.createCard
+            showClose: false
         }
     }
 
@@ -118,8 +130,12 @@ class ColumnFooter extends Component {
         this.setState({ showClose: false })
     }
 
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if(this.props.createcard !== nextProps.createcard)
+            this.closeInputName();
+    }
+
     render() {
-        alert(this.state.showClose)
         const showFooter = this.state.showClose ? 
         <div className="column-footer">
             <div>
@@ -128,7 +144,7 @@ class ColumnFooter extends Component {
                     onBlur={this.props.addcard}></textarea>
             </div>
             <span className="controller-active" onClick={this.props.addcard}>Добавить карточку</span>
-            <span className="close-input-name" onClick={this.closeInputName}></span>
+            <span className="close-input-name" onMouseDown={this.closeInputName}></span>
         </div>
         : 
         <div className="column-footer">
@@ -143,7 +159,8 @@ class ColumnFooter extends Component {
 class ColumnCard extends Component { 
     constructor(props) { 
      super(props); 
-     this.changeName = this.changeName.bind(this); 
+     this.changeName = this.changeName.bind(this);
+     this.openPopup = this.openPopup.bind(this);
      this.state = {name: this.props.name, countcomment: this.props.countcomment}; 
     } 
 
@@ -151,11 +168,19 @@ class ColumnCard extends Component {
         this.setState({name: this.props.name})
     }
 
+    openPopup() {
+        document.getElementByTagName('body').after(<div className="pesudo-body"></div>)
+        ReactDOM.render(<OpenPopup column={this.props.column} name={this.props.name} />,
+                            document.getElementsByClassName('pseudo-body'));
+    }
+
     render() {
+        let showComment = this.state.countcomment != 0 ?
+        <p className="column-card-footer">Count of comments:{this.state.countcomment}</p> : null;
     return (
-        <div className="column-card">
+        <div className="column-card" onClick={this.openPopup}>
         <p>{this.state.name}</p>
-        <p className="column-card-footer">Count of comments:{this.state.countcomment}</p>
+        {showComment}
         </div>
     )}
    }

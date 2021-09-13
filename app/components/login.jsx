@@ -25,12 +25,6 @@ export class LoginForm extends Component {
 
     componentDidMount() {
         this.Data = JSON.parse(localStorage.getItem('formdata'));
-
-        /*if(localStorage.getItem('formdata')) {
-            this.setState({ name: this.Data.name});
-        } else {
-            this.setState({name: ''});
-        }*/
     }
 
     render() {
