@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { AllColumns } from './board.jsx';
 
+if(!localStorage.getItem("cards")) { 
+    localStorage.setItem("cards", "[]"); 
+}  
+
 export class LoginForm extends Component {
 
     Data;

@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { OpenPopup } from './popupSettings.jsx';
+import { Popup } from './popupSettings.jsx';
+import { SetIdCard, ChangeColName, AddNewCard } from './storageFunc.jsx'
 import '../../styles/style.css';
 
-const defaultCard = { 
+const defaultCard = {
+    id: "0",
     author: "", 
     column: "", 
     name: "", 
@@ -11,10 +13,10 @@ const defaultCard = {
     comments: [] 
    } 
     
-   const defaultComment = { 
+const defaultComment = { 
     author: "", 
     text: "" 
-   } 
+   }
 
 class Column extends Component {
     constructor(props) {
@@ -25,16 +27,6 @@ class Column extends Component {
                       cards: []}
     }
 
-    // updateStorage(prevName, curName) {
-    //     let parseLocalCards = JSON.parse(localStorage.cards);
-    //     let newLocalCards = parseLocalCards.map((elem) => {
-    //         if(elem.column == prevName) {
-    //             elem.column = curName;
-    //         }
-    //     });
-    //     localStorage.cards = JSON.stringify(newLocalCards);
-    // }
-
     changeName(event) {
         let currentText = event.target.innerHTML;
         event.target.innerHTML = "";
@@ -44,6 +36,7 @@ class Column extends Component {
         inputText.onblur = function() {
             if(inputText.value.length != 0) {
                 event.target.innerHTML = inputText.value;
+                ChangeColName(this.state.name, event.target.innerHTML);
                 this.setState({name: inputText.value})
                 inputText.remove();
             } else {
@@ -53,15 +46,14 @@ class Column extends Component {
     }
 
     addCard(event) {
-        let parseLocalCards = JSON.parse(localStorage.cards);
         const inputNameCard = document.querySelector('.input-name-card');
         if(inputNameCard.value) {
                 let newCard = Object.assign(defaultCard, {
+                    id: SetIdCard(),
                     author: JSON.parse(localStorage.formdata).name, 
                     column: this.state.name,
-                    name: inputNameCard.value}); 
-                parseLocalCards.push(newCard); 
-                localStorage.cards = JSON.stringify(parseLocalCards); 
+                    name: inputNameCard.value});       
+                AddNewCard(newCard);
                 this.setState({cards: [...this.state.cards, newCard]});
         }
     } 
@@ -86,17 +78,13 @@ class ColumnHeader extends Component {
     }
 }
 
-class ColumnList extends Component {
+class ColumnList extends Component {    
     render() {
     const cards = [];
-
-    if(!localStorage.cards) { 
-        localStorage.cards = "[]"; 
-    }
-
     this.props.cards.forEach((card) => {
         cards.push(
             <ColumnCard
+                    id={card.id}
                     name={card.name}
                     column={this.props.column}
                     countcomment={card.comments.length} />
@@ -159,39 +147,36 @@ class ColumnFooter extends Component {
 class ColumnCard extends Component { 
     constructor(props) { 
      super(props); 
-     this.changeName = this.changeName.bind(this);
-     this.openPopup = this.openPopup.bind(this);
-     this.state = {name: this.props.name, countcomment: this.props.countcomment}; 
+     this.setPopupActive = this.setPopupActive.bind(this);
+     this.state = {id: this.props.id,
+                   name: this.props.name,
+                   countcomment: this.props.countcomment,
+                   popupActive: false}; 
     } 
 
-    changeName() {
-        this.setState({name: this.props.name})
-    }
-
-    openPopup() {
-        document.getElementByTagName('body').after(<div className="pesudo-body"></div>)
-        ReactDOM.render(<OpenPopup column={this.props.column} name={this.props.name} />,
-                            document.getElementsByClassName('pseudo-body'));
+    setPopupActive(val) {
+        this.setState({popupActive: val})
     }
 
     render() {
         let showComment = this.state.countcomment != 0 ?
         <p className="column-card-footer">Count of comments:{this.state.countcomment}</p> : null;
     return (
-        <div className="column-card" onClick={this.openPopup}>
+        <div className="column-card" onClick={() => this.setPopupActive(true)}>
         <p>{this.state.name}</p>
         {showComment}
+        <Popup active={this.state.popupActive} setActive={this.setPopupActive} id={this.state.id}/>
         </div>
     )}
    }
 
 export function AllColumns() {
     return (
-        <div className="row page-style">
-            <div className="row">
-                <Column name="TODO" />
-                <Column name="In Progress" />
+            <div className="row page-style">
+                <div className="row">
+                    <Column name="TODO" />
+                    <Column name="In Progress" />
+                </div>
             </div>
-        </div>
     )
 }

@@ -1,0 +1,86 @@
+.popup {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.popup.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+.popup-content {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+    height: 400px;
+    width: 50vw;
+}
+
+.popup-content.active {
+    transform: scale(1)
+}
+
+.description-textarea {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+    height: 100px;
+    width: 10vw;
+    display: none;
+    transform: scale(0);
+}
+
+.description-textarea.active {
+    display: block;
+    transform: scale(1)
+}
+
+.description-text {
+    height: 100px;
+    width: 10vw;
+    transform: scale(0);
+}
+
+.description-text.active {
+    transform: scale(1)
+}
+
+.controller-textarea {
+    transform: scale(0);
+}
+
+.controller-textarea.active {
+    transform: scale(1)
+}
+
+.save-com-button {
+    display: none;
+    transform: scale(0);
+}
+
+.save-com-button.active {
+    display: block;
+    transform: scale(1)
+}
+
+.member-name {
+    width: 32px;
+    height: 32px;
+    line-height: 30px;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #000;
+    text-align: center;
+    background: #bbb;
+  }
