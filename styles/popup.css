@@ -27,8 +27,19 @@
     width: 50vw;
 }
 
+.popup-content h3{
+    font-size: 1rem;
+    font-weight: 700;
+}
+
 .popup-content.active {
-    transform: scale(1)
+    transform: scale(1);
+    display: inline-table;
+}
+
+.desсription-content h3 {
+    float: left;
+    margin-right: 10px;
 }
 
 .description-textarea {
@@ -47,7 +58,7 @@
 }
 
 .description-text {
-    height: 100px;
+    margin-bottom: 50px;
     width: 10vw;
     transform: scale(0);
 }
@@ -83,4 +94,44 @@
     color: #000;
     text-align: center;
     background: #bbb;
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
   }
+
+.current-comment {
+    display: none;
+    transform: scale(0);
+}
+
+.current-comment button {
+    margin: 5px;
+}
+
+.current-comment.active {
+    display: block;
+    transform: scale(1)
+}
+
+.edit-comment-controller {
+    display: none;
+    transform: scale(0);
+}
+
+.edit-comment-controller.active {
+    display: block;
+    transform: scale(1)
+}
+
+.header-column-popup {
+    font-size: 12px;
+    margin-top: -10px;
+}
+
+.popup-input-area {
+    width: 350px;
+}
+
+.comment-author-name {
+    font-weight: 600;
+}

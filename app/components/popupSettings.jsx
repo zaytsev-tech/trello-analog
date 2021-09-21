@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect, useContext } from 'react';
+import { AddNewComment, SaveStorageDesc, SetIdComment, DeleteComment, EditComment } from './storageFunc.jsx'
 import ReactDOM from 'react-dom';
 import '../../styles/style.css';
 import '../../styles/popup.css';
@@ -16,7 +17,7 @@ export const Popup = ({active, setActive, id}) => {
             e.stopPropagation();
             return setActive(false); }}>
             <div className = {active ? "popup-content active" : "popup-content"} onClick={(e) => e.stopPropagation()}>
-                <div className="header-popup">{searchedElement.name}</div>
+                <div className="header-popup"><h3>{searchedElement.name}</h3></div>
                 <div className="header-column-popup">в колонке {searchedElement.column}</div>
                 <div className="description-popup">{MakeDescription(searchedElement)}</div>
                 <div className="comments-popup">{CommentBlock(searchedElement)}</div>
@@ -31,27 +32,16 @@ function MakeDescription(obj) {
     const [text, setText] = useState("");
     let currentDesc = desc;
 
-    const saveStorage = (event) => {
-        let parseCards = JSON.parse(localStorage.getItem("cards"));
-        let searchedElement = "";
-        for(let elem of parseCards) {
-            if(elem.id == obj.id) {
-                elem.description = text;
-                setDesc(text);
-            }
-        }
-        localStorage.setItem('cards', JSON.stringify(parseCards));
-    }
-
     if(currentDesc != "") {
         return (
-        <div className="desription-content">Описание
-        <button onClick={() => setActive(true)}>Изменить</button><br/>
+        <div className="desсription-content"><h3>Описание</h3>
+        <button onClick={() => setActive(true)} className="btn btn-secondary btn-sm">Изменить</button><br/>
         <div className={active ? "description-textarea active" : "description-textarea"}>
             <textarea className="popup-input-area" defaultValue={currentDesc}
                         onChange={(event) => setText(event.target.value)}></textarea>
             <div className={active ? "controller-textarea active" : "controller-textarea"}>
-                <button onClick={(e) => {setActive(false); saveStorage(e)}}>Сохранить</button>
+                <button className="btn btn-secondary btn-sm"
+                        onClick={(e) => {setActive(false); setDesc(text); SaveStorageDesc(obj, text)}}>Сохранить</button>
                 <span className="close-input-name" onClick={() => setActive(false)}></span>
             </div>
         </div>
@@ -60,13 +50,14 @@ function MakeDescription(obj) {
         );
     } else {
      return (
-        <div className="desription-content">Описание<br/>
+        <div className="desсription-content"><h3>Описание</h3>
         <div className="description-textarea active">
             <textarea className="popup-input-area" placeholder="Добавить более подробное описание..." 
                      onClick={() => setActive(true)} defaultValue={currentDesc}
                      onChange={(event) => setText(event.target.value)}></textarea><br/>
             <div className={active ? "controller-textarea active" : "controller-textarea"}>
-                <button onClick={() => {setActive(false); saveStorage()}}>Сохранить</button>
+                <button className="btn btn-secondary btn-sm"
+                        onClick={(e) => {setActive(false); setDesc(text); SaveStorageDesc(obj, text)}}>Сохранить</button>
                 <span className="close-input-name" onClick={() => setActive(false)}></span>
             </div>
         </div>
@@ -74,47 +65,125 @@ function MakeDescription(obj) {
     )}
 }
 
+class CommentElem extends Component {
+    constructor(props) {
+        super(props);
+        this.setEdit = this.setEdit.bind(this);
+        this.handleActive = this.handleActive.bind(this);
+        this.handleText = this.handleText.bind(this);
+        this.state = { active: false,
+                        currentText: this.props.elem.text}
+    }
+
+    handleActive(mode) {
+        this.setState({active: mode})
+    }
+
+    handleText(text) {
+        this.setState({currentText: text})
+    }
+
+    setEdit(event) {
+        event.preventDefault();
+        EditComment(this.props.obj.id, this.props.elem.id, this.state.currentText);
+        this.setState({active: false})
+    }
+
+    render() {
+    return (
+        <div className="comment-element">
+            <div className="member-name">{this.props.elem.author.slice(0,1)}</div>
+            <div className="comment-desc">
+                <span className="comment-author-name">{this.props.elem.author}</span>
+                <div className="comment-container">
+                <div className={!this.state.active ? "current-comment active" : "current-comment"}>
+                    <p>{this.state.currentText}</p>
+                    <div>
+                        <button className="btn btn-secondary btn-sm"
+                                onClick={() => {this.handleActive(true)}}>Изменить</button>
+                        <button className="btn btn-secondary btn-sm"
+                                onClick={e => 
+                                        DeleteComment(this.props.obj.id, this.props.elem.id)}>Удалить</button>
+                    </div>
+                    </div>
+                    <div className={this.state.active ? "edit-comment-controller active" : "edit-comment-controller"}>
+                        <form onSubmit={e => this.setEdit(e)}>
+                            <textarea onChange={e => this.handleText(e.target.value)} 
+                                        defaultValue={this.state.currentText}></textarea>
+                            <input type="submit" value="Сохранить" 
+                                    className="btn btn-primary btn-sm"
+                            />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+    }
+}
+
+const ShowListComments = (obj) => {
+    let listComments = [];
+    let parseCards = JSON.parse(localStorage.getItem("cards"));
+    for(let card of parseCards) {
+        if(card.id == obj.id) {
+        if(Array.isArray(obj.comments)) {
+            for(let elem of obj.comments) {
+                listComments.push(<CommentElem elem={elem} obj={obj} />);
+            }
+        }
+      }
+    }
+        console.log("ShowList:")
+        console.log(listComments)
+        return listComments;
+    }
+
 function CommentBlock(obj) {
     const [comment, setComment] = useState(false);
     const [textComment, setTextComment] = useState("");
+    const [contentList, setContentList] = useState(ShowListComments(obj));
+
     let parseCards = JSON.parse(localStorage.getItem("cards"));
+    let result = "";
     for(let elem of parseCards) {
         if(elem.id == obj.id) {
             obj = elem;
         }
     }
+    const handlerSubmit = (e) => {
+        e.preventDefault();
+        AddNewComment(obj, {id: SetIdComment(obj.id), author: obj.author, text: textComment});
+        document.querySelector(".comment-box textarea").value = "";
+        setComment(false);
+        updateContentList();
+    }
+
+    const updateContentList = () => {
+        result = ShowListComments(obj);
+        setContentList(result);
+        console.log("before usestate")
+        console.log(contentList)
+    }
+
     return (
         <div className="comments-popup">
-            Действия
+            <h3>Действия</h3>
             <div className="member-name">{obj.author.slice(0,1)}</div>
             <div className="comment-box">
-                <form>
+                <form onSubmit={e => {handlerSubmit(e)}}>
                     <textarea placeholder="Напишите комментарий..."
                                 onClick={() => setComment(true)}
-                                onBlur={() => setComment(false)}
-                                onChange={(event) => setTextComment(event.target.value)}
+                                onChange={event => setTextComment(event.target.value)}
                                 ></textarea>
-                    <input type="submit" className={comment ? "save-com-button active" : "save-com-button"}
-                            onSubmit={() => addComment(obj, {author: obj.author, text: textComment})}
-                            value="Сохранить"
-                            />
+                    <input type="submit" value="Сохранить"
+                            className={comment ? "save-com-button active btn btn-secondary btn-sm" 
+                                        : "save-com-button btn btn-secondary btn-sm"} />
                 </form>
             </div>
             <div className="comments-list">
-                {}
+                {contentList}
             </div>
         </div>
     )
-}
-
-function addComment(obj, comment) {
-    let parseCards = JSON.parse(localStorage.getItem("cards"));
-    for(let elem of parseCards) {
-        if(elem.id == obj.id) {
-            alert(1);
-            alert(comment.text)
-            elem.comments = elem.comments.push(comment);
-        }
-    }
-    localStorage.setItem('cards', JSON.stringify(parseCards));
 }

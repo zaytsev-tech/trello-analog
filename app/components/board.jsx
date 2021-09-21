@@ -10,63 +10,8 @@ const defaultCard = {
     column: "", 
     name: "", 
     description: "", 
-    comments: [] 
-   } 
-    
-const defaultComment = { 
-    author: "", 
-    text: "" 
+    comments: "[]" 
    }
-
-class Column extends Component {
-    constructor(props) {
-        super(props);
-        this.changeName = this.changeName.bind(this);
-        this.addCard = this.addCard.bind(this);
-        this.state = {name: this.props.name,
-                      cards: []}
-    }
-
-    changeName(event) {
-        let currentText = event.target.innerHTML;
-        event.target.innerHTML = "";
-        let inputText = document.createElement('input');
-        inputText.value = currentText;
-        event.target.before(inputText);
-        inputText.onblur = function() {
-            if(inputText.value.length != 0) {
-                event.target.innerHTML = inputText.value;
-                ChangeColName(this.state.name, event.target.innerHTML);
-                this.setState({name: inputText.value})
-                inputText.remove();
-            } else {
-                alert('Введите название колонки');
-            }
-        }.bind(this);
-    }
-
-    addCard(event) {
-        const inputNameCard = document.querySelector('.input-name-card');
-        if(inputNameCard.value) {
-                let newCard = Object.assign(defaultCard, {
-                    id: SetIdCard(),
-                    author: JSON.parse(localStorage.formdata).name, 
-                    column: this.state.name,
-                    name: inputNameCard.value});       
-                AddNewCard(newCard);
-                this.setState({cards: [...this.state.cards, newCard]});
-        }
-    } 
-    render() {
-        return (
-        <div className="col-4 container trello-column">
-            <ColumnHeader changeName={this.changeName} currentName={this.state.name} />
-            <ColumnList cards={this.state.cards} column={this.state.name}/>
-            <ColumnFooter addcard={this.addCard} createcard={this.state.cards} />
-        </div>
-        );
-    }
-}
 
 class ColumnHeader extends Component {
     render() {
@@ -75,27 +20,6 @@ class ColumnHeader extends Component {
                 <h3 onClick={this.props.changeName}>{this.props.currentName}</h3>
             </div>
         );
-    }
-}
-
-class ColumnList extends Component {    
-    render() {
-    const cards = [];
-    this.props.cards.forEach((card) => {
-        cards.push(
-            <ColumnCard
-                    id={card.id}
-                    name={card.name}
-                    column={this.props.column}
-                    countcomment={card.comments.length} />
-        )
-    });
-
-    return (
-            <div className="container column-list-cards">
-                {cards}
-            </div>
-        )
     }
 }
 
@@ -114,7 +38,7 @@ class ColumnFooter extends Component {
     }
 
     closeInputName() {
-        document.getElementsByClassName('controller-active')[0].classList.remove('controller-active');
+        //document.getElementsByClassName('controller-active')[0].classList.remove('controller-active');
         this.setState({ showClose: false })
     }
 
@@ -170,12 +94,115 @@ class ColumnCard extends Component {
     )}
    }
 
+   class ColumnList extends Component {    
+    render() {
+    const cards = [];
+    this.props.cards.forEach((card) => {
+        cards.push(
+            <ColumnCard
+                    id={card.id}
+                    name={card.name}
+                    column={this.props.column}
+                    countcomment={Array.isArray(card.comments) ? 
+                                    card.comments.length : JSON.parse(card.comments).length} />
+        )
+    });
+    return (
+            <div className="container column-list-cards">
+                {cards}
+            </div>
+        )
+    }
+}
+
+class Column extends Component {
+    constructor(props) {
+        super(props);
+        this.changeName = this.changeName.bind(this);
+        this.addCard = this.addCard.bind(this);
+        this.getCards = this.getCards.bind(this);
+        this.state = {name: this.props.name,
+                      cards: []}
+    }
+
+    getCards() {
+        let parsedCards = JSON.parse(localStorage.getItem('cards'));
+        let masColumnCards = [];
+        if(parsedCards) {
+            for(let elem of parsedCards) {
+                if(elem.column == this.props.name) {
+                    masColumnCards.push(elem);
+                }
+            }
+        }
+        this.setState({cards: masColumnCards});
+        return masColumnCards;
+    }
+
+    changeName(event) {
+        let currentText = event.target.innerHTML;
+        event.target.innerHTML = "";
+        let inputText = document.createElement('input');
+        inputText.value = currentText;
+        event.target.before(inputText);
+        inputText.onblur = function() {
+            if(inputText.value.length != 0) {
+                event.target.innerHTML = inputText.value;
+                ChangeColName(this.state.name, event.target.innerHTML);
+                this.setState({name: inputText.value})
+                inputText.remove();
+            } else {
+                alert('Введите название колонки');
+            }
+        }.bind(this);
+    }
+
+    addCard(event) {
+        const inputNameCard = document.querySelector('.input-name-card');
+        if(inputNameCard.value) {
+                let newCard = Object.assign(defaultCard, {
+                    id: SetIdCard(),
+                    author: JSON.parse(localStorage.formdata).name, 
+                    column: this.state.name,
+                    name: inputNameCard.value});       
+                AddNewCard(newCard);
+                this.setState({cards: [...this.state.cards, newCard]});
+        }
+    } 
+    render() {
+        if(this.state.cards.length == 0)
+            this.getCards();
+
+        return (
+        <div className="col-4 container trello-column">
+            <ColumnHeader changeName={this.changeName} currentName={this.state.name} />
+            <ColumnList cards={this.state.cards} column={this.state.name}/>
+            <ColumnFooter addcard={this.addCard} createcard={this.state.cards} />
+        </div>
+        );
+    }
+}
+
 export function AllColumns() {
+
+    let parsedCards = JSON.parse(localStorage.getItem("cards"));
+
+    const parseColumns = (parsedCards) => {
+        let setCol = new Set();
+        let masCol = [];
+        for(let elem of parsedCards) {
+            setCol.add(elem.column);
+        }
+        for(let val of setCol) {
+            masCol.push(<Column name={val} />);
+        }
+        return masCol;
+    }
+
     return (
             <div className="row page-style">
                 <div className="row">
-                    <Column name="TODO" />
-                    <Column name="In Progress" />
+                    {parseColumns(parsedCards)}
                 </div>
             </div>
     )
