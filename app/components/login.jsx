@@ -24,7 +24,11 @@ export class LoginForm extends Component {
     onSubmitForm(event) {
         event.preventDefault();
         localStorage.setItem('formdata', JSON.stringify(this.state));
-        ReactDOM.render(<AllColumns />, document.getElementById('app'));
+        if(this.state.name != "") {
+            ReactDOM.render(<AllColumns />, document.getElementById('app'));
+        } else {
+            alert('Вы не ввели имя.')
+        }
     }
 
     componentDidMount() {

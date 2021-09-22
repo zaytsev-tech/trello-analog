@@ -37,6 +37,10 @@
     display: inline-table;
 }
 
+.desсription-content {
+    margin-bottom: 30px;
+}
+
 .desсription-content h3 {
     float: left;
     margin-right: 10px;
@@ -134,4 +138,11 @@
 
 .comment-author-name {
     font-weight: 600;
+}
+
+.delete-card {
+    top: 0;
+    right: 0;
+    position: absolute;
+    margin: 10px;
 }

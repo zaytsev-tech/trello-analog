@@ -174,7 +174,7 @@ class Column extends Component {
             this.getCards();
 
         return (
-        <div className="col-4 container trello-column">
+        <div className="col-3 container trello-column">
             <ColumnHeader changeName={this.changeName} currentName={this.state.name} />
             <ColumnList cards={this.state.cards} column={this.state.name}/>
             <ColumnFooter addcard={this.addCard} createcard={this.state.cards} />

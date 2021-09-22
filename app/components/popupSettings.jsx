@@ -1,5 +1,7 @@
 import React, { Component, useState, useEffect, useContext } from 'react';
-import { AddNewComment, SaveStorageDesc, SetIdComment, DeleteComment, EditComment } from './storageFunc.jsx'
+import { AddNewComment, SaveStorageDesc, SetIdComment,
+            DeleteComment, EditComment, DeleteCardStorage } from './storageFunc.jsx'
+import { AllColumns } from './board.jsx';
 import ReactDOM from 'react-dom';
 import '../../styles/style.css';
 import '../../styles/popup.css';
@@ -21,6 +23,7 @@ export const Popup = ({active, setActive, id}) => {
                 <div className="header-column-popup">в колонке {searchedElement.column}</div>
                 <div className="description-popup">{MakeDescription(searchedElement)}</div>
                 <div className="comments-popup">{CommentBlock(searchedElement)}</div>
+                <div className="delete-card" onClick={e => e.stopPropagation()}>{DeleteCard(searchedElement)}</div>
             </div>
         </div>
     )
@@ -70,6 +73,7 @@ class CommentElem extends Component {
         super(props);
         this.setEdit = this.setEdit.bind(this);
         this.handleActive = this.handleActive.bind(this);
+        this.clickDelete = this.clickDelete.bind(this);
         this.handleText = this.handleText.bind(this);
         this.state = { active: false,
                         currentText: this.props.elem.text}
@@ -81,6 +85,10 @@ class CommentElem extends Component {
 
     handleText(text) {
         this.setState({currentText: text})
+    }
+
+    clickDelete(e) {
+        DeleteComment(this.props.obj.id, this.props.elem.id);
     }
 
     setEdit(event) {
@@ -102,8 +110,7 @@ class CommentElem extends Component {
                         <button className="btn btn-secondary btn-sm"
                                 onClick={() => {this.handleActive(true)}}>Изменить</button>
                         <button className="btn btn-secondary btn-sm"
-                                onClick={e => 
-                                        DeleteComment(this.props.obj.id, this.props.elem.id)}>Удалить</button>
+                                onClick={e => this.clickDelete(e)}>Удалить</button>
                     </div>
                     </div>
                     <div className={this.state.active ? "edit-comment-controller active" : "edit-comment-controller"}>
@@ -134,8 +141,6 @@ const ShowListComments = (obj) => {
         }
       }
     }
-        console.log("ShowList:")
-        console.log(listComments)
         return listComments;
     }
 
@@ -143,28 +148,29 @@ function CommentBlock(obj) {
     const [comment, setComment] = useState(false);
     const [textComment, setTextComment] = useState("");
     const [contentList, setContentList] = useState(ShowListComments(obj));
-
-    let parseCards = JSON.parse(localStorage.getItem("cards"));
-    let result = "";
-    for(let elem of parseCards) {
-        if(elem.id == obj.id) {
-            obj = elem;
+    
+    const updateObj = () => {
+        let parseCards = JSON.parse(localStorage.getItem("cards"));
+        for(let elem of parseCards) {
+            if(elem.id == obj.id) {
+                obj = elem;
+            }
         }
+        return obj;
     }
+
     const handlerSubmit = (e) => {
         e.preventDefault();
         AddNewComment(obj, {id: SetIdComment(obj.id), author: obj.author, text: textComment});
         document.querySelector(".comment-box textarea").value = "";
         setComment(false);
-        updateContentList();
     }
 
-    const updateContentList = () => {
-        result = ShowListComments(obj);
-        setContentList(result);
-        console.log("before usestate")
-        console.log(contentList)
-    }
+    useEffect(() => {
+        window.addEventListener('storage', setContentList(ShowListComments(updateObj())));
+
+      return () => window.removeEventListener('storage', setContentList(ShowListComments(updateObj())));
+    }, [contentList]);
 
     return (
         <div className="comments-popup">
@@ -185,5 +191,20 @@ function CommentBlock(obj) {
                 {contentList}
             </div>
         </div>
+    )
+}
+
+function DeleteCard(obj) {
+    const [object, setObject] = useState(obj);
+    const clickDelete = () => {
+        let parseCards = JSON.parse(localStorage.getItem("cards"));
+        DeleteCardStorage(obj.id);
+        setObject(parseCards[parseCards.length-1]);
+        return ReactDOM.render(<AllColumns />, document.getElementById('app'));
+    }
+    
+    return (
+        <button className="delete-button btn btn-secondary btn-sm"
+                onClick={(e) => clickDelete(e)}>Удалить карточку</button>
     )
 }

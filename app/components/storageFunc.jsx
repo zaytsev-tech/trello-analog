@@ -1,6 +1,3 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
 export const SetIdCard = () => {
     let max = 0;
     const parsedCards = JSON.parse(localStorage.getItem('cards'));
@@ -87,6 +84,17 @@ export const DeleteComment = (objectId, id) => {
                     break;
                 }
             }
+        }
+    }
+    localStorage.setItem('cards', JSON.stringify(parsedCards));
+    return parsedCards;
+}
+
+export const DeleteCardStorage = (objectId) => {
+    let parsedCards = JSON.parse(localStorage.getItem("cards"));
+    for(let elem = 0; elem < parsedCards.length; elem++) {
+        if(parsedCards[elem].id == objectId) {
+            parsedCards.splice(elem, 1);
         }
     }
     localStorage.setItem('cards', JSON.stringify(parsedCards));

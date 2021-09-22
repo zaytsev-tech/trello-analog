@@ -12,6 +12,7 @@ body {
     border-radius: 5px;
     background: #dadada;
     color: #172b4d;
+    margin: 5px;
 }
 
 .trello-column > h3 {
