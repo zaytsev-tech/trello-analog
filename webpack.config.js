@@ -1,7 +1,7 @@
 const path = require('path');
   
 module.exports = {
-    entry: "./app/app.jsx",
+    entry: ["babel-polyfill", "./app/app.jsx"],
     devtool: "inline-source-map",
     mode: "development",
     output:{

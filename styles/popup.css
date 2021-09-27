@@ -11,6 +11,7 @@
     opacity: 0;
     pointer-events: none;
     transition: 0.5s;
+    overflow-y: auto;
 }
 
 .popup.active {
@@ -23,8 +24,10 @@
     padding: 20px;
     border-radius: 12px;
     background-color: white;
-    height: 400px;
+    height: 100%;
     width: 50vw;
+    margin-top: 20px;
+    overflow-y: auto;
 }
 
 .popup-content h3{
@@ -34,7 +37,7 @@
 
 .popup-content.active {
     transform: scale(1);
-    display: inline-table;
+    display: block;
 }
 
 .desсription-content {
@@ -145,4 +148,9 @@
     right: 0;
     position: absolute;
     margin: 10px;
+}
+
+.comments-popup {
+    height: max-content;
+    position: relative;
 }

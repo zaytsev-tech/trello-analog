@@ -87,7 +87,6 @@ export const DeleteComment = (objectId, id) => {
         }
     }
     localStorage.setItem('cards', JSON.stringify(parsedCards));
-    return parsedCards;
 }
 
 export const DeleteCardStorage = (objectId) => {

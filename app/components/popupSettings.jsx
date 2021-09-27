@@ -5,6 +5,7 @@ import { AllColumns } from './board.jsx';
 import ReactDOM from 'react-dom';
 import '../../styles/style.css';
 import '../../styles/popup.css';
+import { updateCommaList } from 'typescript';
 
 export const Popup = ({active, setActive, id}) => {
     let searchedElement = "";
@@ -14,6 +15,12 @@ export const Popup = ({active, setActive, id}) => {
                 searchedElement = elem;
             }
         }
+
+    const updateAfterDel = (e) => {
+        e.stopPropagation();
+        let parseCards = JSON.parse(localStorage.getItem("cards"));
+        id = parseCards[parseCards.length-1];
+    }
     return (
         <div className={active ? "popup active" : "popup"} onClick={(e) => {
             e.stopPropagation();
@@ -23,11 +30,27 @@ export const Popup = ({active, setActive, id}) => {
                 <div className="header-column-popup">в колонке {searchedElement.column}</div>
                 <div className="description-popup">{MakeDescription(searchedElement)}</div>
                 <div className="comments-popup">{CommentBlock(searchedElement)}</div>
-                <div className="delete-card" onClick={e => e.stopPropagation()}>{DeleteCard(searchedElement)}</div>
+                <div className="delete-card" onClick={e => updateAfterDel(e)}>{DeleteCard(searchedElement)}</div>
             </div>
         </div>
     )
 }
+
+function DeleteCard(obj) {
+    const [object, setObject] = useState(obj);
+    const clickDelete = (e) => {
+        e.stopPropagation();
+        let parseCards = JSON.parse(localStorage.getItem("cards"));
+        DeleteCardStorage(obj.id);
+        setObject(parseCards[parseCards.length-1]);
+        return ReactDOM.render(<AllColumns />, document.getElementById('app'));
+    }
+    
+    return (
+        <button className="delete-button btn btn-secondary btn-sm"
+                onClick={(e) => clickDelete(e)}>Удалить карточку</button>
+    )
+}   
 
 function MakeDescription(obj) {
     const [desc, setDesc] = useState(obj.description);
@@ -89,6 +112,7 @@ class CommentElem extends Component {
 
     clickDelete(e) {
         DeleteComment(this.props.obj.id, this.props.elem.id);
+        this.props.upd()
     }
 
     setEdit(event) {
@@ -129,14 +153,14 @@ class CommentElem extends Component {
     }
 }
 
-const ShowListComments = (obj) => {
+const ShowListComments = (obj, upd) => {
     let listComments = [];
     let parseCards = JSON.parse(localStorage.getItem("cards"));
     for(let card of parseCards) {
         if(card.id == obj.id) {
         if(Array.isArray(obj.comments)) {
             for(let elem of obj.comments) {
-                listComments.push(<CommentElem elem={elem} obj={obj} />);
+                listComments.push(<CommentElem elem={elem} obj={obj} upd={upd} />);
             }
         }
       }
@@ -147,8 +171,7 @@ const ShowListComments = (obj) => {
 function CommentBlock(obj) {
     const [comment, setComment] = useState(false);
     const [textComment, setTextComment] = useState("");
-    const [contentList, setContentList] = useState(ShowListComments(obj));
-    
+
     const updateObj = () => {
         let parseCards = JSON.parse(localStorage.getItem("cards"));
         for(let elem of parseCards) {
@@ -162,15 +185,27 @@ function CommentBlock(obj) {
     const handlerSubmit = (e) => {
         e.preventDefault();
         AddNewComment(obj, {id: SetIdComment(obj.id), author: obj.author, text: textComment});
-        document.querySelector(".comment-box textarea").value = "";
+        updateList(e);
         setComment(false);
+        e.currentTarget.querySelector(".comment-textarea").value = "";
     }
 
-    useEffect(() => {
-        window.addEventListener('storage', setContentList(ShowListComments(updateObj())));
+    const updateList = async (e) => {
+        let updObj = updateObj();
+        let result = await ShowListComments(updObj, updateList);
+        setContentList("");
+        setContentList(result);
+        if(e) {
+            e.currentTarget.querySelector(".comment-textarea").value = "";
+        }
+    }
 
-      return () => window.removeEventListener('storage', setContentList(ShowListComments(updateObj())));
+    useEffect((e) => {
+        if(document.querySelector(".comments-list"))
+            document.querySelector(".comments-list").innerHTML = contentList;
     }, [contentList]);
+
+    const [contentList, setContentList] = useState(ShowListComments(obj, updateList));
 
     return (
         <div className="comments-popup">
@@ -178,7 +213,8 @@ function CommentBlock(obj) {
             <div className="member-name">{obj.author.slice(0,1)}</div>
             <div className="comment-box">
                 <form onSubmit={e => {handlerSubmit(e)}}>
-                    <textarea placeholder="Напишите комментарий..."
+                    <textarea   className="comment-textarea"
+                                placeholder="Напишите комментарий..."
                                 onClick={() => setComment(true)}
                                 onChange={event => setTextComment(event.target.value)}
                                 ></textarea>
@@ -191,20 +227,5 @@ function CommentBlock(obj) {
                 {contentList}
             </div>
         </div>
-    )
-}
-
-function DeleteCard(obj) {
-    const [object, setObject] = useState(obj);
-    const clickDelete = () => {
-        let parseCards = JSON.parse(localStorage.getItem("cards"));
-        DeleteCardStorage(obj.id);
-        setObject(parseCards[parseCards.length-1]);
-        return ReactDOM.render(<AllColumns />, document.getElementById('app'));
-    }
-    
-    return (
-        <button className="delete-button btn btn-secondary btn-sm"
-                onClick={(e) => clickDelete(e)}>Удалить карточку</button>
     )
 }
