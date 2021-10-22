@@ -1,11 +1,10 @@
 import React, { Component, useState, useEffect, useContext } from 'react';
 import { AddNewComment, SaveStorageDesc, SetIdComment,
             DeleteComment, EditComment, DeleteCardStorage } from './storageFunc.jsx'
-import { AllColumns } from './board.jsx';
+import { AllColumns } from './Board.jsx';
 import ReactDOM from 'react-dom';
 import '../../styles/style.css';
 import '../../styles/popup.css';
-import { updateCommaList } from 'typescript';
 
 export const Popup = ({active, setActive, id}) => {
     let searchedElement = "";
@@ -124,7 +123,7 @@ class CommentElem extends Component {
     render() {
     return (
         <div className="comment-element">
-            <div className="member-name">{this.props.elem.author.slice(0,1)}</div>
+            <div className="member-name">{123/*this.props.elem.author.slice(0,1)*/}</div>
             <div className="comment-desc">
                 <span className="comment-author-name">{this.props.elem.author}</span>
                 <div className="comment-container">
@@ -182,17 +181,22 @@ function CommentBlock(obj) {
         return obj;
     }
 
+    const getNameUser = () => {
+        let parseForm = JSON.parse(localStorage.getItem("formdata"));
+        return parseForm.name;
+    }
+
     const handlerSubmit = (e) => {
         e.preventDefault();
-        AddNewComment(obj, {id: SetIdComment(obj.id), author: obj.author, text: textComment});
+        AddNewComment(obj, {id: SetIdComment(obj.id), author: getNameUser, text: textComment});
         updateList(e);
         setComment(false);
         e.currentTarget.querySelector(".comment-textarea").value = "";
     }
 
-    const updateList = async (e) => {
+    const updateList = (e) => {
         let updObj = updateObj();
-        let result = await ShowListComments(updObj, updateList);
+        let result = ShowListComments(updObj, updateList);
         setContentList("");
         setContentList(result);
         if(e) {
@@ -210,7 +214,7 @@ function CommentBlock(obj) {
     return (
         <div className="comments-popup">
             <h3>Действия</h3>
-            <div className="member-name">{obj.author.slice(0,1)}</div>
+            <div className="member-name">{217/*obj.author.slice(0,1)*/}</div>
             <div className="comment-box">
                 <form onSubmit={e => {handlerSubmit(e)}}>
                     <textarea   className="comment-textarea"

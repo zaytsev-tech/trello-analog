@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { LoginForm } from './components/login.jsx';
+import { AllColumns } from './components/Board.jsx';
 
 function checkLS() {
     if(JSON.parse(localStorage.getItem("cards")).length == 0) {
@@ -18,6 +18,6 @@ function checkLS() {
 checkLS();
 
 ReactDOM.render(
-    <LoginForm />,
+    <AllColumns />,
     document.getElementById('app')
 )

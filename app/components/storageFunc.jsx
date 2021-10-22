@@ -36,13 +36,14 @@ export const ChangeColName = (prevName, currentName) => {
         }
     }
     localStorage.setItem('cards', JSON.stringify(arr));
+    return currentName;
 }
 
 export const AddNewCard = (card) => {
     let arr = JSON.parse(localStorage.getItem('cards'));
     if(arr) {
-    arr.push(card);
-    localStorage.setItem('cards', JSON.stringify(arr));
+        arr.push(card);
+        localStorage.setItem('cards', JSON.stringify(arr));
     } else {
         localStorage.setItem('cards', JSON.stringify([card]));
     }
