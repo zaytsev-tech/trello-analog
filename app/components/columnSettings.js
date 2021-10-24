@@ -22,22 +22,12 @@ export function getCards(name) {
     return masColumnCards;
 }
 
-export function changeName(event, name) {
-    let currentText = event.target.innerHTML;
-    event.target.innerHTML = "";
-    let inputText = document.createElement('input');
-    inputText.value = currentText;
-    event.target.before(inputText);
-    inputText.addEventListener('blur', function() {
-        if(inputText.value.length != 0) {
-            event.target.innerHTML = inputText.value;
-            currentText = ChangeColName(name, event.target.innerHTML);
-            inputText.remove();
+export function changeName(current, name) {
+        if(name.length > 0) {
+            return ChangeColName(current, name);
         } else {
             alert('Введите название колонки');
         }
-    });
-        return currentText;
 }
 
 export function addCard(event, name) {

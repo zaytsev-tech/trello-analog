@@ -3,9 +3,15 @@ import { Popup } from './popupSettings.jsx';
 import {getCards, changeName, addCard} from './columnSettings.js';
 
 function ColumnHeader({change, current}) {
+    const [activeChange, setActiveChange] = useState(false);
+    const [inputText, setInputText] = useState(current);
+
         return (
             <div className="column-header">
-                <h3 onClick={change}>{current}</h3>
+                {activeChange ? 
+                    <input value={inputText} onChange={e => setInputText(e.target.value)}
+                   onBlur={e => {changeName(current, inputText); setActiveChange(false);}} /> :
+                <h3 onClick={() => setActiveChange(true)}>{current}</h3>}
             </div>
         )
 }
@@ -85,15 +91,9 @@ function Column({namecol})  {
         setCards(getCards(name))
     }
 
-    function updateName(e) {
-        let newName = changeName(e, name);
-        console.log(newName)
-        setName(newName);
-    }
-
     return (
         <div className="col-3 container trello-column">
-            <ColumnHeader change={e => updateName(e)} current={name} />
+            <ColumnHeader change={e => setName(e)} current={name} />
             <ColumnList cards={cards} column={name}/>
             <ColumnFooter addcard={e => addCard(e, name)} 
                           propA={cards} 

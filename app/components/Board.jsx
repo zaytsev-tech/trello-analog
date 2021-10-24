@@ -1,5 +1,4 @@
-import React, { Component, useState } from 'react';
-import { LoginForm } from './Login.jsx';
+import React from 'react';
 import '../../styles/style.css';
 import Column from './Column.jsx';
 
@@ -23,6 +22,6 @@ export function AllColumns() {
                 <div className="row">
                     {parseColumns(parsedCards)}
                 </div>
-            </div>
+        </div>
     )
 }

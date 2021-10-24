@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AddNewComment, SaveStorageDesc, SetIdComment,
             DeleteComment, EditComment, DeleteCardStorage } from './storageFunc.jsx'
 import { AllColumns } from './Board.jsx';
@@ -171,7 +171,7 @@ function CommentBlock(obj) {
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        AddNewComment(obj, {id: SetIdComment(obj.id), author: getNameUser, text: textComment});
+        AddNewComment(obj, {id: SetIdComment(obj.id), author: getNameUser(), text: textComment});
         updateList(e);
         setComment(false);
         e.currentTarget.querySelector(".comment-textarea").value = "";
