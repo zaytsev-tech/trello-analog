@@ -1,15 +1,13 @@
-import React, {Component, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { Popup } from './popupSettings.jsx';
 import {getCards, changeName, addCard} from './columnSettings.js';
 
-class ColumnHeader extends Component {
-    render() {
+function ColumnHeader({change, current}) {
         return (
             <div className="column-header">
-                <h3 onClick={this.props.changeName}>{this.props.currentName}</h3>
+                <h3 onClick={change}>{current}</h3>
             </div>
-        );
-    }
+        )
 }
 
 function ColumnCard({id, name, column, countcomment}) { 
@@ -36,10 +34,10 @@ function ColumnList({cards, column}) {
                     column={column}
                     countcomment={Array.isArray(card.comments) ? 
                                     card.comments.length : JSON.parse(card.comments).length} />
-        )
-    })}
+            )
+        })}
             </div>
-        )
+    )
 }
 
 function ColumnFooter({addcard, propA, propB}) {
@@ -79,8 +77,8 @@ function ColumnFooter({addcard, propA, propB}) {
         return showFooter;
 }
 
-function Column(props)  {
-    const [name, setName] = useState(props.name);
+function Column({namecol})  {
+    const [name, setName] = useState(namecol);
     const [cards, setCards] = useState(getCards(name));
 
     function updateCards() {
@@ -95,7 +93,7 @@ function Column(props)  {
 
     return (
         <div className="col-3 container trello-column">
-            <ColumnHeader changeName={e => updateName(e)} currentName={name} />
+            <ColumnHeader change={e => updateName(e)} current={name} />
             <ColumnList cards={cards} column={name}/>
             <ColumnFooter addcard={e => addCard(e, name)} 
                           propA={cards} 

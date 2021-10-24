@@ -90,56 +90,40 @@ function MakeDescription(obj) {
     )}
 }
 
-class CommentElem extends Component {
-    constructor(props) {
-        super(props);
-        this.setEdit = this.setEdit.bind(this);
-        this.handleActive = this.handleActive.bind(this);
-        this.clickDelete = this.clickDelete.bind(this);
-        this.handleText = this.handleText.bind(this);
-        this.state = { active: false,
-                        currentText: this.props.elem.text}
+function CommentElem({obj, elem, update}) {
+    const [active, setActive] = useState(false);
+    const [curText, setCurText] = useState(elem.text);
+
+    function clickDelete(e) {
+        DeleteComment(obj.id, elem.id);
+        update()
     }
 
-    handleActive(mode) {
-        this.setState({active: mode})
-    }
-
-    handleText(text) {
-        this.setState({currentText: text})
-    }
-
-    clickDelete(e) {
-        DeleteComment(this.props.obj.id, this.props.elem.id);
-        this.props.upd()
-    }
-
-    setEdit(event) {
+    function setEdit(event) {
         event.preventDefault();
-        EditComment(this.props.obj.id, this.props.elem.id, this.state.currentText);
-        this.setState({active: false})
+        EditComment(obj.id, elem.id, curText);
+        setActive(false);
     }
 
-    render() {
     return (
         <div className="comment-element">
-            <div className="member-name">{123/*this.props.elem.author.slice(0,1)*/}</div>
+            <div className="member-name">{elem.author ? elem.author.slice(0,1) : "-"}</div>
             <div className="comment-desc">
-                <span className="comment-author-name">{this.props.elem.author}</span>
+                <span className="comment-author-name">{elem.author}</span>
                 <div className="comment-container">
-                <div className={!this.state.active ? "current-comment active" : "current-comment"}>
-                    <p>{this.state.currentText}</p>
+                <div className={!active ? "current-comment active" : "current-comment"}>
+                    <p>{curText}</p>
                     <div>
                         <button className="btn btn-secondary btn-sm"
-                                onClick={() => {this.handleActive(true)}}>Изменить</button>
+                                onClick={() => {setActive(true)}}>Изменить</button>
                         <button className="btn btn-secondary btn-sm"
-                                onClick={e => this.clickDelete(e)}>Удалить</button>
+                                onClick={e => clickDelete(e)}>Удалить</button>
                     </div>
                     </div>
-                    <div className={this.state.active ? "edit-comment-controller active" : "edit-comment-controller"}>
-                        <form onSubmit={e => this.setEdit(e)}>
-                            <textarea onChange={e => this.handleText(e.target.value)} 
-                                        defaultValue={this.state.currentText}></textarea>
+                    <div className={active ? "edit-comment-controller active" : "edit-comment-controller"}>
+                        <form onSubmit={e => setEdit(e)}>
+                            <textarea onChange={e => setCurText(e.target.value)} 
+                                        defaultValue={curText}></textarea>
                             <input type="submit" value="Сохранить" 
                                     className="btn btn-primary btn-sm"
                             />
@@ -149,7 +133,6 @@ class CommentElem extends Component {
             </div>
         </div>
     )
-    }
 }
 
 const ShowListComments = (obj, upd) => {
@@ -214,7 +197,7 @@ function CommentBlock(obj) {
     return (
         <div className="comments-popup">
             <h3>Действия</h3>
-            <div className="member-name">{217/*obj.author.slice(0,1)*/}</div>
+            <div className="member-name">{obj.author.slice(0,1)}</div>
             <div className="comment-box">
                 <form onSubmit={e => {handlerSubmit(e)}}>
                     <textarea   className="comment-textarea"

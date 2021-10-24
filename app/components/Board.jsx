@@ -13,7 +13,7 @@ export function AllColumns() {
             setCol.add(elem.column);
         }
         for(let val of setCol) {
-            masCol.push(<Column name={val} />);
+            masCol.push(<Column namecol={val} />);
         }
         return masCol;
     }
