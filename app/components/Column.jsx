@@ -6,12 +6,17 @@ function ColumnHeader({change, current}) {
     const [activeChange, setActiveChange] = useState(false);
     const [inputText, setInputText] = useState(current);
 
+    function updateInputText(e) {
+        setInputText(changeName(current, inputText));
+        setActiveChange(false);
+    }
+
         return (
             <div className="column-header">
                 {activeChange ? 
                     <input value={inputText} onChange={e => setInputText(e.target.value)}
-                   onBlur={e => {changeName(current, inputText); setActiveChange(false);}} /> :
-                <h3 onClick={() => setActiveChange(true)}>{current}</h3>}
+                   onBlur={e => updateInputText(e)} /> :
+                <h3 onClick={() => setActiveChange(true)}>{inputText}</h3>}
             </div>
         )
 }
