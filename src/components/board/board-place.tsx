@@ -1,6 +1,6 @@
 import '../../styles/style.css';
 
-// import Column from './Column.jsx';
+//import Column from './Column.jsx';
 
 function BoardPlace() {
   //   const parsedCards = JSON.parse(localStorage.getItem('cards'));
@@ -19,7 +19,7 @@ function BoardPlace() {
   return (
     <div className="row page-style">
       <p>Test</p>
-      {/* <div className="row">{parseColumns(parsedCards)}</div> */}
+      {/*<div className="row">{parseColumns(parsedCards)}</div>*/}
     </div>
   );
 }

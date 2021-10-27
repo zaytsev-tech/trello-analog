@@ -1,20 +1,20 @@
-import { createContext, Dispatch, useEffect, useReducer } from 'react';
+import { createContext, Dispatch, useEffect, useReducer, useState } from 'react';
 
-import { Initializer, InitializerUser, storageReducer } from './storage-reducer';
+import { InitializerUser, userStorageReducer } from './storage-reducer';
 
 interface IContextProps {
   state: string;
-  dispatch: Dispatch<string>;
+  dispatch: Dispatch<any>;
 }
 
-export const StorContext = createContext<IContextProps | null>(null);
+const StorContext = createContext<IContextProps>({
+  state: '',
+  dispatch: () => {},
+});
 
-export const StorProvider = ({ children }: any) => {
-  //const [storage, dispatch] = useReducer(storageReducer, [], Initializer);
-  const [nameStorage, nameDispatch] = useReducer(storageReducer, InitializerUser);
-  //   useEffect(() => {
-  //     localStorage.setItem('cards', JSON.stringify(storage));
-  //   }, [storage]);
+const StorProvider = ({ children }: any) => {
+  const [username, setUser] = useState(InitializerUser());
+  const [nameStorage, nameDispatch] = useReducer(userStorageReducer, username);
 
   useEffect(() => {
     localStorage.setItem('formdata', JSON.stringify(nameStorage));
@@ -27,3 +27,5 @@ export const StorProvider = ({ children }: any) => {
 
   return <StorContext.Provider value={valueStorContext}>{children}</StorContext.Provider>;
 };
+
+export { StorContext, StorProvider };

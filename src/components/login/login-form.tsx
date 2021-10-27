@@ -1,4 +1,6 @@
-import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import '../../styles/style.css';
+
+import { FormEvent, useContext, useState } from 'react';
 
 import { StorContext } from '../localstorage/storage-provider';
 import { setUsername } from '../localstorage/storage-reducer';
@@ -10,10 +12,10 @@ if (!localStorage.getItem('cards')) {
 function LoginForm({ value }: any) {
   const [name, setName] = useState(value);
   const [active, setActive] = useState(true);
-  const nameDispatch = useContext(StorContext);
+  const { dispatch, state } = useContext(StorContext);
 
   function saveUsername(name: string) {
-    nameDispatch(setUsername(name));
+    dispatch(setUsername(name));
   }
 
   function onSubmitForm(event: FormEvent) {
