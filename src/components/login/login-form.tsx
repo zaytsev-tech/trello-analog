@@ -2,17 +2,17 @@ import '../../styles/style.css';
 
 import { FormEvent, useContext, useState } from 'react';
 
-import { StorContext } from '../localstorage/storage-provider';
-import { setUsername } from '../localstorage/storage-reducer';
+import { StorContext } from '../context/login/index';
+import { setUsername } from '../store/login/index';
 
 if (!localStorage.getItem('cards')) {
   localStorage.setItem('cards', '[]');
 }
 
-function LoginForm({ value }: any) {
-  const [name, setName] = useState(value);
-  const [active, setActive] = useState(true);
+function LoginForm() {
   const { dispatch, state } = useContext(StorContext);
+  const [name, setName] = useState(state);
+  const [active, setActive] = useState(true);
 
   function saveUsername(name: string) {
     dispatch(setUsername(name));

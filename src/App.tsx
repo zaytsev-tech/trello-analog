@@ -1,9 +1,7 @@
-import { StorProvider } from './components/localstorage/storage-provider';
 import { LoginForm } from './components/login/index';
+import { StorProvider } from './components/provider/storage-provider';
 
 function App() {
-  //const [cards, setCards] = useState(Initializer());
-
   return (
     <div className="App">
       <StorProvider>
