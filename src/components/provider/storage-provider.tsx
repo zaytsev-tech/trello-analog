@@ -1,25 +1,36 @@
-import { FC, useEffect, useReducer, useState } from 'react';
+import { FC, useEffect, useReducer } from 'react';
 
 import { StorContext } from '../context/login/login-context';
 import { InitializerUser, userStorageReducer } from './../store/login/index';
 
 export const StorProvider: FC = ({ children }) => {
-  const [username, setUser] = useState(InitializerUser());
-  //const [cards, setCards] = useState(InitializerCards());
+  const initialUsername = {
+    name: '',
+    columns: {
+      0: {
+        key: '',
+        name: '',
+        cards: {
+          0: {
+            key: '',
+            author: '',
+            description: '',
+            comments: { 0: { key: '', author: '', text: '' } },
+            countComments: 0,
+          },
+        },
+      },
+    },
+  };
   const [nameStorage, nameDispatch] = useReducer(
     userStorageReducer,
-    username,
+    initialUsername,
     InitializerUser,
   );
-  //const [cardsStorage, cardsDispatch] = useReducer(cardStorageReducer, cards);
 
   useEffect(() => {
-    localStorage.setItem('formdata', nameStorage);
+    localStorage.setItem('storage', JSON.stringify(nameStorage));
   }, [nameStorage]);
-
-  // useEffect(() => {
-  //   localStorage.setItem('cards', JSON.stringify(cardsStorage));
-  // }, [cardsStorage]);
 
   return (
     <StorContext.Provider value={{ state: nameStorage, dispatch: nameDispatch }}>

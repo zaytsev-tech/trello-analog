@@ -2,20 +2,30 @@ import { Dispatch } from 'react';
 
 import { ActionTypes } from './action-types';
 
-export type Card = {
+export interface Board {
+  name: string;
+  columns: Record<string, Column>;
+}
+
+interface Column {
+  key: string;
+  name: string;
+  cards: Record<string, Card>;
+}
+
+export interface Card {
   key: string;
   author: string;
-  nameColumn: string;
   description: string;
-  comments: Comment[];
+  comments: Record<string, Comment>;
   countComments: number;
-};
+}
 
-type Comment = {
+interface Comment {
   key: string;
   author: string;
   text: string;
-};
+}
 
 export type ActionCard =
   | { type: 'ADD_CARD'; item: Card }
@@ -24,11 +34,6 @@ export type ActionCard =
 export type ActionUsername = { type: ActionTypes.setUsername; item: string };
 
 export interface UserContextProps {
-  state: string;
+  state: Board;
   dispatch: Dispatch<ActionUsername>;
-}
-
-export interface CardsContextProps {
-  state: Card[];
-  dispatch: Dispatch<ActionCard>;
 }

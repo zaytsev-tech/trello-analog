@@ -1,5 +1,6 @@
 import { LoginForm } from './components/login/index';
 import { StorProvider } from './components/provider/storage-provider';
+import { GlobalStyle } from './styles/index';
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <StorProvider>
         <LoginForm />
       </StorProvider>
+      <GlobalStyle />
     </div>
   );
 }

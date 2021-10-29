@@ -1,17 +1,12 @@
-import '../../styles/style.css';
-
 import { FormEvent, useContext, useState } from 'react';
+import styled from 'styled-components';
 
 import { StorContext } from '../context/login/index';
 import { setUsername } from '../store/login/index';
 
-if (!localStorage.getItem('cards')) {
-  localStorage.setItem('cards', '[]');
-}
-
 function LoginForm() {
   const { dispatch, state } = useContext(StorContext);
-  const [name, setName] = useState(state);
+  const [name, setName] = useState(state.name);
   const [active, setActive] = useState(true);
 
   function saveUsername(name: string) {
@@ -30,8 +25,8 @@ function LoginForm() {
   }
 
   return (
-    <div className={active ? 'login active' : 'login'}>
-      <div className="row pt-5 login-container">
+    <LoginBgStyle $active={active}>
+      <LoginContainerStyle>
         <form
           className="col-sm-10 offset-sm-1 p-5 gx-3 text-center border"
           onSubmit={onSubmitForm}
@@ -51,9 +46,44 @@ function LoginForm() {
             <input type="submit" className="btn btn-primary mb-2" value="Войти" />
           </div>
         </form>
-      </div>
-    </div>
+      </LoginContainerStyle>
+    </LoginBgStyle>
   );
 }
+
+export const LoginContainerStyle = styled.div`
+  display: block;
+  position: relative;
+  border-radius: 12px;
+  background-color: white;
+  height: 50%;
+  width: 50vw;
+  margin-top: 20px;
+  opacity: 1;
+  transform: scale(1);
+  overflow-y: auto;
+  pointer-events: all;
+`;
+
+export const LoginBgStyle = styled('div')<{ $active: boolean }>`
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  opacity: ${(props) => (props.$active ? `1` : `0`)};
+  pointer-events: none !important;
+  transition: 0.5s;
+  overflow-y: auto;
+
+  & + DIV {
+    opacity: 1;
+    pointer-events: none;
+  }
+`;
 
 export default LoginForm;
