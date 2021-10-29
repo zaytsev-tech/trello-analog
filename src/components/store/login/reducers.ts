@@ -1,5 +1,5 @@
+import { Board } from './../board/index';
 import { ActionTypes } from './action-types';
-import { Board } from './types';
 import { ActionUsername } from './types';
 
 export const userStorageReducer = (state: Board, action: ActionUsername) => {

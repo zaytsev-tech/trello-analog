@@ -1,25 +1,15 @@
-import '../../styles/style.css';
+import { useContext } from 'react';
 
-//import Column from './Column.jsx';
+import { StorContext } from '../context/login';
+import { ColumnContainer } from './column/index';
 
 function BoardPlace() {
-  //   const parsedCards = JSON.parse(localStorage.getItem('cards'));
-  //   const parseColumns = (parsedCards) => {
-  //     const setCol = new Set();
-  //     const masCol = [];
-  //     for (const elem of parsedCards) {
-  //       setCol.add(elem.column);
-  //     }
-  //     for (const val of setCol) {
-  //       masCol.push(<Column namecol={val} />);
-  //     }
-  //     return masCol;
-  //   };
-
+  const { dispatch, state } = useContext(StorContext);
   return (
-    <div className="row page-style">
-      <p>Test</p>
-      {/*<div className="row">{parseColumns(parsedCards)}</div>*/}
+    <div>
+      {Object.values(state.columns).map((column) => (
+        <ColumnContainer key={column.key} nameColumn={column} />
+      ))}
     </div>
   );
 }

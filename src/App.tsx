@@ -1,3 +1,4 @@
+import { BoardPlace } from './components/board';
 import { LoginForm } from './components/login/index';
 import { StorProvider } from './components/provider/storage-provider';
 import { GlobalStyle } from './styles/index';
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <StorProvider>
         <LoginForm />
+        <BoardPlace />
       </StorProvider>
       <GlobalStyle />
     </div>

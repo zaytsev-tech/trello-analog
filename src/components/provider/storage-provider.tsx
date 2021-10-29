@@ -4,36 +4,38 @@ import { StorContext } from '../context/login/login-context';
 import { InitializerUser, userStorageReducer } from './../store/login/index';
 
 export const StorProvider: FC = ({ children }) => {
-  const initialUsername = {
+  const initialObj = {
     name: '',
     columns: {
-      0: {
-        key: '',
-        name: '',
+      '0': {
+        key: 'column-key',
+        name: 'column-test',
         cards: {
-          0: {
-            key: '',
-            author: '',
-            description: '',
-            comments: { 0: { key: '', author: '', text: '' } },
-            countComments: 0,
+          '0': {
+            key: 'card-key',
+            author: 'card-author',
+            name: 'card',
+            description: 'card-desc',
+            comments: {
+              '0': { key: 'comment-key', author: 'comment-author', text: 'comment-text' },
+            },
           },
         },
       },
     },
   };
-  const [nameStorage, nameDispatch] = useReducer(
+  const [objectStorage, objectDispatch] = useReducer(
     userStorageReducer,
-    initialUsername,
+    initialObj,
     InitializerUser,
   );
 
   useEffect(() => {
-    localStorage.setItem('storage', JSON.stringify(nameStorage));
-  }, [nameStorage]);
+    localStorage.setItem('storage', JSON.stringify(objectStorage));
+  }, [objectStorage]);
 
   return (
-    <StorContext.Provider value={{ state: nameStorage, dispatch: nameDispatch }}>
+    <StorContext.Provider value={{ state: objectStorage, dispatch: objectDispatch }}>
       {children}
     </StorContext.Provider>
   );

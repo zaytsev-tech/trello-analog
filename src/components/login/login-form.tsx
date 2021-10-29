@@ -54,6 +54,7 @@ function LoginForm() {
 export const LoginContainerStyle = styled.div`
   display: block;
   position: relative;
+  text-align: center;
   border-radius: 12px;
   background-color: white;
   height: 50%;
@@ -63,6 +64,14 @@ export const LoginContainerStyle = styled.div`
   transform: scale(1);
   overflow-y: auto;
   pointer-events: all;
+
+  & FORM {
+    margin-top: 35%;
+  }
+
+  & INPUT {
+    margin: 5px;
+  }
 `;
 
 export const LoginBgStyle = styled('div')<{ $active: boolean }>`
@@ -82,7 +91,7 @@ export const LoginBgStyle = styled('div')<{ $active: boolean }>`
 
   & + DIV {
     opacity: 1;
-    pointer-events: none;
+    pointer-events: all;
   }
 `;
 
