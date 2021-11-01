@@ -1,42 +1,19 @@
 import { FC, useEffect, useReducer } from 'react';
 
-import { StorContext } from '../context/login/login-context';
-import { InitializerUser, userStorageReducer } from './../store/login/index';
+import { StorContext } from '../../context/board/index';
+import { userStorageReducer } from '../store/board/index';
+import { Initializer } from '../store/board/init';
+import { initialState } from '../store/board/state';
 
 export const StorProvider: FC = ({ children }) => {
-  const initialObj = {
-    name: '',
-    columns: {
-      '0': {
-        key: 'column-key',
-        name: 'column-test',
-        cards: {
-          '0': {
-            key: 'card-key',
-            author: 'card-author',
-            name: 'card',
-            description: 'card-desc',
-            comments: {
-              '0': { key: 'comment-key', author: 'comment-author', text: 'comment-text' },
-            },
-          },
-        },
-      },
-    },
-  };
-  const [objectStorage, objectDispatch] = useReducer(
-    userStorageReducer,
-    initialObj,
-    InitializerUser,
-  );
+  const stateDispatchStorage = useReducer(userStorageReducer, initialState, Initializer);
+  const [state] = stateDispatchStorage;
 
   useEffect(() => {
-    localStorage.setItem('storage', JSON.stringify(objectStorage));
-  }, [objectStorage]);
+    localStorage.setItem('storage', JSON.stringify(state));
+  }, [state]);
 
   return (
-    <StorContext.Provider value={{ state: objectStorage, dispatch: objectDispatch }}>
-      {children}
-    </StorContext.Provider>
+    <StorContext.Provider value={stateDispatchStorage}>{children}</StorContext.Provider>
   );
 };

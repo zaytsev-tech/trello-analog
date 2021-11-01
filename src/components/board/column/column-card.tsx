@@ -9,16 +9,24 @@ interface CardProps {
 
 export const ColumnCard: FC<CardProps> = ({ card }) => {
   return (
-    <div>
+    <ColCard>
       <div>{card.name}</div>
       <CountCommentsStyle>
         Count of comments: {Object.keys(card.comments).length}
       </CountCommentsStyle>
-    </div>
+    </ColCard>
   );
 };
 
-export const CountCommentsStyle = styled.div`
+const CountCommentsStyle = styled.div`
   margin-top: 10px;
   font-size: 12px;
+`;
+
+const ColCard = styled.div`
+  margin-bottom: 10px;
+  padding: 5px;
+  background: white;
+  border: solid 1px lightgray;
+  border-radius: 5px;
 `;

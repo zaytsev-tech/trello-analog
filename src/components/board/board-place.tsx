@@ -1,14 +1,14 @@
 import { useContext } from 'react';
 
-import { StorContext } from '../context/login';
+import { StorContext } from '../../context/board/index';
 import { ColumnContainer } from './column/index';
 
 function BoardPlace() {
-  const { dispatch, state } = useContext(StorContext);
+  const [state] = useContext(StorContext);
   return (
     <div>
       {Object.values(state.columns).map((column) => (
-        <ColumnContainer key={column.key} nameColumn={column} />
+        <ColumnContainer key={column.key} column={column} />
       ))}
     </div>
   );

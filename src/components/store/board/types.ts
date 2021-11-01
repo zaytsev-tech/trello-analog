@@ -1,3 +1,9 @@
+import { Dispatch } from 'react';
+
+import { BoardAction } from './action-types';
+
+export type UserContextProps = [Board, Dispatch<BoardAction>];
+
 export interface Board {
   name: string;
   columns: Record<string, Column>;
@@ -23,6 +29,6 @@ interface Comment {
   text: string;
 }
 
-export type ActionCard =
-  | { type: 'ADD_CARD'; item: Card }
-  | { type: 'DELETE_CARD'; item: Card };
+// export type ActionCard =
+//   | { type: 'ADD_CARD'; item: Card }
+//   | { type: 'DELETE_CARD'; item: Card };

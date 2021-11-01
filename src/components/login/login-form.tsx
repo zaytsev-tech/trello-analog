@@ -1,11 +1,11 @@
 import { FormEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
 
-import { StorContext } from '../context/login/index';
-import { setUsername } from '../store/login/index';
+import { StorContext } from '../../context/board/index';
+import { setUsername } from '../store/board/index';
 
 function LoginForm() {
-  const { dispatch, state } = useContext(StorContext);
+  const [state, dispatch] = useContext(StorContext);
   const [name, setName] = useState(state.name);
   const [active, setActive] = useState(true);
 
@@ -25,16 +25,13 @@ function LoginForm() {
   }
 
   return (
-    <LoginBgStyle $active={active}>
-      <LoginContainerStyle>
-        <form
-          className="col-sm-10 offset-sm-1 p-5 gx-3 text-center border"
-          onSubmit={onSubmitForm}
-        >
-          <div className="col">
-            <label className="p-2">
+    <LoginBg $active={active}>
+      <LoginContainer>
+        <LoginContainerForm onSubmit={onSubmitForm}>
+          <div>
+            <label>
               Ваше имя:
-              <input
+              <LoginFormInput
                 type="text"
                 name="login"
                 value={name}
@@ -42,16 +39,16 @@ function LoginForm() {
               />
             </label>
           </div>
-          <div className="col">
-            <input type="submit" className="btn btn-primary mb-2" value="Войти" />
+          <div>
+            <LoginFormInput type="submit" value="Войти" />
           </div>
-        </form>
-      </LoginContainerStyle>
-    </LoginBgStyle>
+        </LoginContainerForm>
+      </LoginContainer>
+    </LoginBg>
   );
 }
 
-export const LoginContainerStyle = styled.div`
+const LoginContainer = styled.div`
   display: block;
   position: relative;
   text-align: center;
@@ -64,17 +61,20 @@ export const LoginContainerStyle = styled.div`
   transform: scale(1);
   overflow-y: auto;
   pointer-events: all;
-
-  & FORM {
-    margin-top: 35%;
-  }
-
-  & INPUT {
-    margin: 5px;
-  }
 `;
 
-export const LoginBgStyle = styled('div')<{ $active: boolean }>`
+const LoginContainerForm = styled.form`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const LoginFormInput = styled.input`
+  margin: 5px;
+`;
+
+const LoginBg = styled('div')<{ $active: boolean }>`
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.4);
@@ -88,11 +88,6 @@ export const LoginBgStyle = styled('div')<{ $active: boolean }>`
   pointer-events: none !important;
   transition: 0.5s;
   overflow-y: auto;
-
-  & + DIV {
-    opacity: 1;
-    pointer-events: all;
-  }
 `;
 
 export default LoginForm;

@@ -18,16 +18,7 @@ export const ColumnCardsList: FC<CardsProps> = ({ cardsProp }) => {
   );
 };
 
-export const CardsListStyle = styled.div`
+const CardsListStyle = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-
-  & > div {
-    margin-bottom: 10px;
-    padding: 5px;
-    background: white;
-    border: solid 1px lightgray;
-    border-radius: 5px;
-    }
-  }
 `;

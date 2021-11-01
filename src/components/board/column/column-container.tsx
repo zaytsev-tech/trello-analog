@@ -7,15 +7,15 @@ import { ColumnFooter } from './column-footer';
 import { ColumnHeader } from './column-header';
 
 interface ColumnProps {
-  nameColumn: Column;
+  column: Column;
 }
 
-export const ColumnContainer: FC<ColumnProps> = ({ nameColumn }) => {
+export const ColumnContainer: FC<ColumnProps> = ({ column }) => {
   return (
     <ColumnContainerStyle>
-      <ColumnHeader nameColumn={nameColumn.name} />
-      <ColumnCardsList cardsProp={nameColumn.cards} />
-      <ColumnFooter cards={nameColumn.cards} />
+      <ColumnHeader column={column} />
+      <ColumnCardsList cardsProp={column.cards} />
+      <ColumnFooter cards={column.cards} />
     </ColumnContainerStyle>
   );
 };
