@@ -33,7 +33,7 @@ export const ColumnHeader: FC<ColumnHeaderProps> = ({ column }) => {
       {!active ? (
         <h3 onClick={() => setActive(true)}>{header}</h3>
       ) : (
-        <input value={header} onChange={changingHeader} onBlur={innerHeader} />
+        <input value={header} autoFocus onChange={changingHeader} onBlur={innerHeader} />
       )}
     </div>
   );

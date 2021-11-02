@@ -25,7 +25,7 @@ function LoginForm() {
   }
 
   return (
-    <LoginBg $active={active}>
+    <PopupBg $active={active}>
       <LoginContainer>
         <LoginContainerForm onSubmit={onSubmitForm}>
           <div>
@@ -44,7 +44,7 @@ function LoginForm() {
           </div>
         </LoginContainerForm>
       </LoginContainer>
-    </LoginBg>
+    </PopupBg>
   );
 }
 
@@ -60,7 +60,6 @@ const LoginContainer = styled.div`
   opacity: 1;
   transform: scale(1);
   overflow-y: auto;
-  pointer-events: all;
 `;
 
 const LoginContainerForm = styled.form`
@@ -74,7 +73,7 @@ const LoginFormInput = styled.input`
   margin: 5px;
 `;
 
-const LoginBg = styled('div')<{ $active: boolean }>`
+export const PopupBg = styled('div')<{ $active: boolean }>`
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.4);
@@ -85,9 +84,9 @@ const LoginBg = styled('div')<{ $active: boolean }>`
   top: 0;
   left: 0;
   opacity: ${(props) => (props.$active ? `1` : `0`)};
-  pointer-events: none !important;
   transition: 0.5s;
   overflow-y: auto;
+  pointer-events: ${(props) => (props.$active ? `all` : `none`)};
 `;
 
 export default LoginForm;

@@ -45,6 +45,7 @@ export const ColumnFooter: FC<ColumnFooterProps> = ({ column }) => {
           <Textarea
             placeholder="Enter the header of card.."
             value={text}
+            autoFocus
             onChange={changingTextCard}
             onBlur={innerTextCard}
           ></Textarea>
