@@ -41,6 +41,20 @@ export const userStorageReducer = (state: Board, action: BoardAction): Board => 
       };
     }
 
+    case ActionTypes.setNameCard:
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          cards: {
+            ...state.columns.cards,
+            [action.item]: {
+              name: action.value,
+            },
+          },
+        },
+      };
+
     default:
       return state;
   }

@@ -16,3 +16,9 @@ export const addNewCard = (item: string, value: string): BoardAction => ({
   item,
   value,
 });
+
+export const setNameCard = (item: string, value: string): BoardAction => ({
+  type: ActionTypes.setNameCard,
+  item,
+  value,
+});

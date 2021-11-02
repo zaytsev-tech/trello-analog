@@ -1,18 +1,18 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Card } from '../../store/board/index';
+import { Column } from '../../store/board/index';
 import { ColumnCard } from './column-card';
 
 interface CardsProps {
-  cardsProp: Record<string, Card>;
+  column: Column;
 }
 
-export const ColumnCardsList: FC<CardsProps> = ({ cardsProp }) => {
+export const ColumnCardsList: FC<CardsProps> = ({ column }) => {
   return (
     <CardsListStyle>
-      {Object.values(cardsProp).map((card) => (
-        <ColumnCard key={card.key} card={card} />
+      {Object.values(column.cards).map((card) => (
+        <ColumnCard key={card.key} columnKey={column.key} card={card} />
       ))}
     </CardsListStyle>
   );

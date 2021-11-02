@@ -7,12 +7,13 @@ import { Card } from '../../store/board';
 import { CardHeader } from './card-header';
 
 interface CardProps {
+  columnKey: string;
   card: Card;
   status: boolean;
   change: (val: boolean) => void;
 }
 
-export const CardContainer: FC<CardProps> = ({ card, status, change }) => {
+export const CardContainer: FC<CardProps> = ({ columnKey, card, status, change }) => {
   const checkoutPopup = () => {
     change(false);
   };
@@ -20,7 +21,7 @@ export const CardContainer: FC<CardProps> = ({ card, status, change }) => {
     <Modal>
       <PopupBg $active={status} onClick={checkoutPopup}>
         <CardWindow onClick={(e) => e.stopPropagation()}>
-          <CardHeader card={card} />
+          <CardHeader card={card} columnKey={columnKey} />
         </CardWindow>
       </PopupBg>
     </Modal>

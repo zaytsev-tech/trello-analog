@@ -1,14 +1,15 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { Card } from '../../store/board/index';
 import { CardContainer } from '../card/index';
 
 interface CardProps {
+  columnKey: string;
   card: Card;
 }
 
-export const ColumnCard: FC<CardProps> = ({ card }) => {
+export const ColumnCard: FC<CardProps> = ({ columnKey, card }) => {
   const [activePopup, setActivePopup] = useState(false);
 
   const updateStatusPopup = (val: boolean) => {
@@ -24,7 +25,12 @@ export const ColumnCard: FC<CardProps> = ({ card }) => {
         </CountComments>
       </ColCard>
       {activePopup && (
-        <CardContainer card={card} status={activePopup} change={updateStatusPopup} />
+        <CardContainer
+          columnKey={columnKey}
+          card={card}
+          status={activePopup}
+          change={updateStatusPopup}
+        />
       )}
     </>
   );
