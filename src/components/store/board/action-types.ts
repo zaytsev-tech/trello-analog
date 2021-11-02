@@ -6,5 +6,5 @@ export enum ActionTypes {
 
 export type BoardAction =
   | { type: ActionTypes.setUsername; item: string }
-  | { type: ActionTypes.addNewCard; item: string }
+  | { type: ActionTypes.addNewCard; item: string; value: string }
   | { type: ActionTypes.setHeaderColumnName; item: string; value: string };

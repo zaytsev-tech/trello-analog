@@ -1,27 +1,39 @@
-import { ChangeEvent, FC, useContext, useState } from 'react';
+import { ChangeEvent, FC, MouseEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
 
 import { StorContext } from '../../../context/board';
-import { Card } from '../../store/board';
+import { Column } from '../../store/board';
+import { addNewCard } from '../../store/board/actions';
 
 interface ColumnFooterProps {
-  cards: Record<string, Card>;
+  column: Column;
 }
 
-export const ColumnFooter: FC<ColumnFooterProps> = ({ cards }) => {
-  const [state, dispatch] = useContext(StorContext);
+export const ColumnFooter: FC<ColumnFooterProps> = ({ column }) => {
+  const [, dispatch] = useContext(StorContext);
   const [active, setActive] = useState(false);
   const [text, setText] = useState('');
 
   const innerTextCard = () => {
-    if (text !== '') {
-      setActive(false);
+    if (text !== '' && active !== false) {
+      dispatch(addNewCard(column.key, text));
+      setText('');
     }
     setActive(false);
   };
 
   const changingTextCard = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
+  };
+
+  const closeInput = () => {
+    setActive(false);
+    setText('');
+  };
+
+  const buttonAddCard = (e: MouseEvent) => {
+    text !== '' ? innerTextCard() : setActive(true);
+    e.preventDefault();
   };
 
   return (
@@ -34,11 +46,11 @@ export const ColumnFooter: FC<ColumnFooterProps> = ({ cards }) => {
             placeholder="Enter the header of card.."
             value={text}
             onChange={changingTextCard}
-            onBlur={() => setActive(false)}
+            onBlur={innerTextCard}
           ></Textarea>
           <div>
-            <ButtonAdd>+ Add card</ButtonAdd>
-            <Span onClick={() => setActive(false)}>X</Span>
+            <ButtonAdd onMouseDown={buttonAddCard}>+ Add card</ButtonAdd>
+            <Span onMouseDown={closeInput}>X</Span>
           </div>
         </div>
       )}

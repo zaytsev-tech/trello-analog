@@ -15,7 +15,7 @@ export const ColumnContainer: FC<ColumnProps> = ({ column }) => {
     <ColumnContainerStyle>
       <ColumnHeader column={column} />
       <ColumnCardsList cardsProp={column.cards} />
-      <ColumnFooter cards={column.cards} />
+      <ColumnFooter column={column} />
     </ColumnContainerStyle>
   );
 };

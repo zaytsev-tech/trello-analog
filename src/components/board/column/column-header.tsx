@@ -9,7 +9,7 @@ interface ColumnHeaderProps {
 }
 
 export const ColumnHeader: FC<ColumnHeaderProps> = ({ column }) => {
-  const [state, dispatch] = useContext(StorContext);
+  const [, dispatch] = useContext(StorContext);
   const [active, setActive] = useState(false);
   const [header, setHeader] = useState(column.name);
 

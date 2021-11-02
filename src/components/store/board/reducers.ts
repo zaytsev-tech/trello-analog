@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { ActionTypes } from './action-types';
 import { BoardAction } from './action-types';
 import { Board } from './index';
@@ -15,6 +17,29 @@ export const userStorageReducer = (state: Board, action: BoardAction): Board => 
           [action.item]: { ...state.columns[action.item], name: action.value },
         },
       };
+
+    case ActionTypes.addNewCard: {
+      const newId = uuidv4();
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          [action.item]: {
+            ...state.columns[action.item],
+            cards: {
+              ...state.columns[action.item].cards,
+              [newId]: {
+                key: newId,
+                name: action.value,
+                author: state.name,
+                description: '',
+                comments: {},
+              },
+            },
+          },
+        },
+      };
+    }
 
     default:
       return state;

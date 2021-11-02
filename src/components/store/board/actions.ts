@@ -11,7 +11,8 @@ export const setHeaderColumnName = (item: string, value: string): BoardAction =>
   value,
 });
 
-export const addNewCard = (item: string): BoardAction => ({
+export const addNewCard = (item: string, value: string): BoardAction => ({
   type: ActionTypes.addNewCard,
   item,
+  value,
 });
