@@ -1,6 +1,6 @@
-import { ChangeEvent, FC, useContext, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 
-import { StorContext } from '../../../context/board';
+import { useBoardContext } from '../../../context/board';
 import { Column } from '../../store/board';
 import { setHeaderColumnName } from '../../store/board/actions';
 
@@ -9,7 +9,7 @@ interface ColumnHeaderProps {
 }
 
 export const ColumnHeader: FC<ColumnHeaderProps> = ({ column }) => {
-  const [, dispatch] = useContext(StorContext);
+  const [, dispatch] = useBoardContext();
   const [active, setActive] = useState(false);
   const [header, setHeader] = useState(column.name);
 

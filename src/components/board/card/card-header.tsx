@@ -1,7 +1,7 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 
-import { StorContext } from '../../../context/board';
+import { useBoardContext } from '../../../context/board';
 import { Card, selectColumnName } from '../../store/board';
 import { setNameCard } from '../../store/board/index';
 
@@ -12,7 +12,7 @@ interface CardProp {
 }
 
 export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
-  const [state, dispatch] = useContext(StorContext);
+  const [state, dispatch] = useBoardContext();
   const [active, setActive] = useState(false);
   const [nameCard, setName] = useState(card.name);
 

@@ -3,4 +3,4 @@ export { setUsername, setHeaderColumnName, addNewCard, setNameCard } from './act
 export { userStorageReducer } from './reducers';
 export type { UserContextProps } from './types';
 export type { BoardAction } from './action-types';
-export { selectColumnName, selectTextDesc } from './selectors';
+export { selectColumnName, selectCardField as selectTextDesc } from './selectors';

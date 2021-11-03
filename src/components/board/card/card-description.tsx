@@ -1,9 +1,10 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 
-import { StorContext } from '../../../context/board';
-import { Card, selectTextDesc } from '../../store/board';
+import { useBoardContext } from '../../../context/board';
+import { Card } from '../../store/board';
 import { setDescription } from '../../store/board/actions';
+import { selectCardField } from '../../store/board/selectors';
 
 interface CardProp {
   columnKey: string;
@@ -11,7 +12,7 @@ interface CardProp {
 }
 
 export const CardDescription: FC<CardProp> = ({ columnKey, card }) => {
-  const [state, dispatch] = useContext(StorContext);
+  const [state, dispatch] = useBoardContext();
   const [active, setActive] = useState(false);
   const [textDesc, setTextDesc] = useState(card.description);
 
@@ -21,7 +22,13 @@ export const CardDescription: FC<CardProp> = ({ columnKey, card }) => {
   };
 
   const cancelInputChanges = () => {
-    setTextDesc(selectTextDesc(state, columnKey, card.key) || '');
+    setTextDesc(
+      selectCardField(
+        state,
+        { colId: columnKey, cardId: card.key },
+        'description',
+      ) as string,
+    );
     setActive(false);
   };
 

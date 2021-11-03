@@ -1,1 +1,1 @@
-export { StorContext } from './board-context';
+export { BoardContext, useBoardContext } from './board-context';

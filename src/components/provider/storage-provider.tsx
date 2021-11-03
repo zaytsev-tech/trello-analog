@@ -1,6 +1,6 @@
 import { FC, useEffect, useReducer } from 'react';
 
-import { StorContext } from '../../context/board/index';
+import { BoardContext } from '../../context/board/index';
 import { userStorageReducer } from '../store/board/index';
 import { Initializer } from '../store/board/init';
 import { initialState } from '../store/board/state';
@@ -14,6 +14,6 @@ export const StorProvider: FC = ({ children }) => {
   }, [state]);
 
   return (
-    <StorContext.Provider value={stateDispatchStorage}>{children}</StorContext.Provider>
+    <BoardContext.Provider value={stateDispatchStorage}>{children}</BoardContext.Provider>
   );
 };

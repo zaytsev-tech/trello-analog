@@ -1,7 +1,7 @@
-import { ChangeEvent, FC, MouseEvent, useContext, useState } from 'react';
+import { ChangeEvent, FC, MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 
-import { StorContext } from '../../../context/board';
+import { useBoardContext } from '../../../context/board';
 import { Column } from '../../store/board';
 import { addNewCard } from '../../store/board/actions';
 
@@ -10,7 +10,7 @@ interface ColumnFooterProps {
 }
 
 export const ColumnFooter: FC<ColumnFooterProps> = ({ column }) => {
-  const [, dispatch] = useContext(StorContext);
+  const [, dispatch] = useBoardContext();
   const [active, setActive] = useState(false);
   const [text, setText] = useState('');
 

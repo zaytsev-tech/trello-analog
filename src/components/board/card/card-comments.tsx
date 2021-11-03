@@ -1,7 +1,7 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 
-import { StorContext } from '../../../context/board';
+import { useBoardContext } from '../../../context/board';
 import { Card } from '../../store/board';
 import { addNewComment } from '../../store/board/actions';
 
@@ -11,7 +11,7 @@ interface CardProp {
 }
 
 export const CardComments: FC<CardProp> = ({ columnKey, card }) => {
-  const [state, dispatch] = useContext(StorContext);
+  const [state, dispatch] = useBoardContext();
   const [active, setActive] = useState(false);
   const [textComment, setTextComment] = useState('');
 

@@ -1,11 +1,11 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import styled from 'styled-components';
 
-import { StorContext } from '../../context/board/index';
+import { useBoardContext } from '../../context/board/index';
 import { setUsername } from '../store/board/index';
 
 function LoginForm() {
-  const [state, dispatch] = useContext(StorContext);
+  const [state, dispatch] = useBoardContext();
   const [name, setName] = useState(state.name);
   const [active, setActive] = useState(true);
 
