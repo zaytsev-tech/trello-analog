@@ -70,11 +70,12 @@ const DescriptionContainer = styled.div`
 const DescriptionHeadP = styled.p`
   display: inline-block;
   margin-right: 5px;
-  word-break: break-all;
+  word-break: break-all;s
 `;
 
 const DescriptionContainerP = styled.p`
   word-break: break-all;
+  cursor: pointer;
 `;
 
 const DescriptionContainerTA = styled.textarea`
@@ -99,7 +100,7 @@ const ControllerCloseTA = styled.span`
 `;
 
 const EmptyDescription = styled.div`
-  background: darkgray;
+  background: gainsboro;
   padding: 10px;
   font-size: 0.8em;
   height: 50px;

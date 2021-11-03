@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Modal } from '../../../portal';
 import { PopupBg } from '../../login/login-form';
 import { Card } from '../../store/board';
+import { CardComments } from './card-comments';
 import { CardDescription } from './card-description';
 import { CardHeader } from './card-header';
 
@@ -24,6 +25,7 @@ export const CardContainer: FC<CardProps> = ({ columnKey, card, status, change }
         <CardWindow onClick={(e) => e.stopPropagation()}>
           <CardHeader card={card} columnKey={columnKey} close={checkoutPopup} />
           <CardDescription card={card} columnKey={columnKey} />
+          <CardComments card={card} columnKey={columnKey} />
         </CardWindow>
       </PopupBg>
     </Modal>

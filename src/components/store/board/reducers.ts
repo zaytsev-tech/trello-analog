@@ -77,6 +77,34 @@ export const userStorageReducer = (state: Board, action: BoardAction): Board => 
         },
       };
 
+    case ActionTypes.addNewComment: {
+      const newId = uuidv4();
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          [action.payload.columnId]: {
+            ...state.columns[action.payload.columnId],
+            cards: {
+              ...state.columns[action.payload.columnId].cards,
+              [action.payload.cardId]: {
+                ...state.columns[action.payload.columnId].cards[action.payload.cardId],
+                comments: {
+                  ...state.columns[action.payload.columnId].cards[action.payload.cardId]
+                    .comments,
+                  [newId]: {
+                    key: newId,
+                    author: action.payload.author,
+                    text: action.payload.value,
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+    }
+
     default:
       return state;
   }
