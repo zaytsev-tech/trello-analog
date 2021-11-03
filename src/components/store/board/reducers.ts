@@ -46,10 +46,32 @@ export const userStorageReducer = (state: Board, action: BoardAction): Board => 
         ...state,
         columns: {
           ...state.columns,
-          cards: {
-            ...state.columns.cards,
-            [action.item]: {
-              name: action.value,
+          [action.payload.columnId]: {
+            ...state.columns[action.payload.columnId],
+            cards: {
+              ...state.columns[action.payload.columnId].cards,
+              [action.payload.cardId]: {
+                ...state.columns[action.payload.columnId].cards[action.payload.cardId],
+                name: action.payload.value,
+              },
+            },
+          },
+        },
+      };
+
+    case ActionTypes.setDescription:
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          [action.payload.columnId]: {
+            ...state.columns[action.payload.columnId],
+            cards: {
+              ...state.columns[action.payload.columnId].cards,
+              [action.payload.cardId]: {
+                ...state.columns[action.payload.columnId].cards[action.payload.cardId],
+                description: action.payload.value,
+              },
             },
           },
         },

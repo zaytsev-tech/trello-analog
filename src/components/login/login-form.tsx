@@ -51,7 +51,6 @@ function LoginForm() {
 const LoginContainer = styled.div`
   display: block;
   position: relative;
-  text-align: center;
   border-radius: 12px;
   background-color: white;
   height: 50%;

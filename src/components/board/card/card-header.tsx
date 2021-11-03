@@ -1,4 +1,5 @@
 import { FC, useContext, useState } from 'react';
+import styled from 'styled-components';
 
 import { StorContext } from '../../../context/board';
 import { Card, selectColumnName } from '../../store/board';
@@ -7,16 +8,18 @@ import { setNameCard } from '../../store/board/index';
 interface CardProp {
   columnKey: string;
   card: Card;
+  close: () => void;
 }
 
-export const CardHeader: FC<CardProp> = ({ columnKey, card }) => {
+export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
   const [state, dispatch] = useContext(StorContext);
   const [active, setActive] = useState(false);
   const [nameCard, setName] = useState(card.name);
 
   const innerHeader = () => {
     if (nameCard !== '') {
-      dispatch(setNameCard(card.key, nameCard));
+      const cardKey = card.key;
+      dispatch(setNameCard({ columnId: columnKey, cardId: cardKey, value: nameCard }));
       setActive(false);
     } else {
       return;
@@ -24,17 +27,48 @@ export const CardHeader: FC<CardProp> = ({ columnKey, card }) => {
   };
 
   return (
-    <div>
+    <HeaderContainer>
+      <HeaderContainerClose onClick={close}>X</HeaderContainerClose>
       {!active ? (
-        <h3 onClick={() => setActive(true)}>{nameCard}</h3>
+        <HeaderContainerH3 onClick={() => setActive(true)}>{nameCard}</HeaderContainerH3>
       ) : (
-        <input
+        <HeaderContainerInput
           value={nameCard}
+          autoFocus
           onChange={(e) => setName(e.target.value)}
           onBlur={innerHeader}
-        ></input>
+        ></HeaderContainerInput>
       )}
-      <p>in column {selectColumnName(state, columnKey)}</p>
-    </div>
+      <HeaderContainerP>in column {selectColumnName(state, columnKey)}</HeaderContainerP>
+    </HeaderContainer>
   );
 };
+
+const HeaderContainer = styled.div`
+  text-align: left;
+  margin: 10px;
+`;
+
+const HeaderContainerH3 = styled.h3`
+  margin: 0;
+`;
+
+const HeaderContainerInput = styled.input`
+  font-size: 1.17em;
+`;
+
+const HeaderContainerP = styled.p`
+  margin-top: 5px;
+  font-size: 0.7em;
+  color: gray;
+`;
+
+const HeaderContainerClose = styled.p`
+  position: absolute;
+  display: block;
+  text-align: right;
+  cursor: pointer;
+  margin: 0;
+  margin-right: 10px;
+  right: 0;
+`;

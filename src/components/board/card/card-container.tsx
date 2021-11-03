@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Modal } from '../../../portal';
 import { PopupBg } from '../../login/login-form';
 import { Card } from '../../store/board';
+import { CardDescription } from './card-description';
 import { CardHeader } from './card-header';
 
 interface CardProps {
@@ -21,7 +22,8 @@ export const CardContainer: FC<CardProps> = ({ columnKey, card, status, change }
     <Modal>
       <PopupBg $active={status} onClick={checkoutPopup}>
         <CardWindow onClick={(e) => e.stopPropagation()}>
-          <CardHeader card={card} columnKey={columnKey} />
+          <CardHeader card={card} columnKey={columnKey} close={checkoutPopup} />
+          <CardDescription card={card} columnKey={columnKey} />
         </CardWindow>
       </PopupBg>
     </Modal>
@@ -31,7 +33,6 @@ export const CardContainer: FC<CardProps> = ({ columnKey, card, status, change }
 const CardWindow = styled.div`
   display: block;
   position: relative;
-  text-align: center;
   border-radius: 12px;
   background-color: white;
   height: 50%;

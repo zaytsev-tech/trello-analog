@@ -1,4 +1,4 @@
-import { ActionTypes, BoardAction } from './action-types';
+import { ActionTypes, BoardAction, InputTextPayload } from './action-types';
 
 export const setUsername = (item: string): BoardAction => ({
   type: ActionTypes.setUsername,
@@ -17,8 +17,12 @@ export const addNewCard = (item: string, value: string): BoardAction => ({
   value,
 });
 
-export const setNameCard = (item: string, value: string): BoardAction => ({
+export const setNameCard = (payload: InputTextPayload): BoardAction => ({
   type: ActionTypes.setNameCard,
-  item,
-  value,
+  payload,
+});
+
+export const setDescription = (payload: InputTextPayload): BoardAction => ({
+  type: ActionTypes.setDescription,
+  payload,
 });
