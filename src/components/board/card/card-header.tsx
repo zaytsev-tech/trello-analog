@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useBoardContext } from '../../../context/board';
 import { Card, selectColumnName } from '../../../store/board/index';
 import { InputHeader } from '../../ui';
+import { DeleteCard } from '../../ui/delete-card';
 
 interface CardProp {
   columnKey: string;
@@ -14,6 +15,7 @@ interface CardProp {
 export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
   const [state] = useBoardContext();
   const [nameCard, setName] = useState(card.name);
+
   return (
     <Header>
       <Close onClick={close}>X</Close>
@@ -24,6 +26,7 @@ export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
         setName={setName}
       />
       <Text>in column {selectColumnName(state, columnKey)}</Text>
+      <DeleteCard columnKey={columnKey} cardKey={card.key} close={close} />
     </Header>
   );
 };

@@ -105,6 +105,12 @@ export const userStorageReducer = (state: Board, action: BoardAction): Board => 
       };
     }
 
+    case ActionTypes.deleteCard: {
+      const newObj = Object.assign({}, state);
+      delete newObj.columns[action.payload.columnKey].cards[action.payload.cardKey];
+      return newObj;
+    }
+
     default:
       return state;
   }

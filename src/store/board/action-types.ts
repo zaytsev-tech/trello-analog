@@ -5,12 +5,18 @@ export enum ActionTypes {
   setNameCard = 'SET_NAME_CARD',
   setDescription = 'SET_DESCRIPTION',
   addNewComment = 'ADD_NEW_COMMENT',
+  deleteCard = 'DELETE_CARD',
 }
 
 export interface InputTextPayload {
   columnId: string;
   cardId: string;
   value: string;
+}
+
+export interface DeleteCardPayload {
+  columnKey: string;
+  cardKey: string;
 }
 
 export interface AuthorTextPayload {
@@ -26,4 +32,5 @@ export type BoardAction =
   | { type: ActionTypes.setNameCard; payload: InputTextPayload }
   | { type: ActionTypes.setDescription; payload: InputTextPayload }
   | { type: ActionTypes.addNewComment; payload: AuthorTextPayload }
+  | { type: ActionTypes.deleteCard; payload: DeleteCardPayload }
   | { type: ActionTypes.setHeaderColumnName; item: string; value: string };

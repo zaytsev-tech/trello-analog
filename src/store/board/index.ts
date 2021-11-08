@@ -6,6 +6,7 @@ export {
   setNameCard,
   addNewComment,
   setDescription,
+  deleteCard,
 } from './actions';
 export { userStorageReducer } from './reducers';
 export { Initializer } from './init';

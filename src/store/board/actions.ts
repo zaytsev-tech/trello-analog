@@ -2,6 +2,7 @@ import {
   ActionTypes,
   AuthorTextPayload,
   BoardAction,
+  DeleteCardPayload,
   InputTextPayload,
 } from './action-types';
 
@@ -34,5 +35,10 @@ export const setDescription = (payload: InputTextPayload): BoardAction => ({
 
 export const addNewComment = (payload: AuthorTextPayload): BoardAction => ({
   type: ActionTypes.addNewComment,
+  payload,
+});
+
+export const deleteCard = (payload: DeleteCardPayload): BoardAction => ({
+  type: ActionTypes.deleteCard,
   payload,
 });
