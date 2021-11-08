@@ -1,12 +1,8 @@
 import { buttons } from './buttons';
 import { typography } from './typography';
 
-export const cardTheme = {
+export const theme = {
   margin: '10px',
   typography,
-  buttons,
-};
-
-export const columnTheme = {
   buttons,
 };

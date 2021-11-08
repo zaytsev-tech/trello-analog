@@ -1,48 +1,15 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../context/board/index';
-import { setUsername } from '../../store/board/index';
+import { UserNameForm } from '../ui';
 
 function UserForm() {
-  const [state, dispatch] = useBoardContext();
-  const [name, setName] = useState(state.name);
   const [active, setActive] = useState(true);
-
-  function saveUsername(name: string) {
-    dispatch(setUsername(name));
-  }
-
-  function onSubmitForm(event: FormEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (name != '') {
-      saveUsername(name);
-      setActive(false);
-    } else {
-      alert('Вы не ввели имя.');
-    }
-  }
 
   return (
     <PopupBg $active={active}>
       <LoginContainer>
-        <ContainerForm onSubmit={onSubmitForm}>
-          <div>
-            <label>
-              Ваше имя:
-              <FormInput
-                type="text"
-                name="login"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <FormInput type="submit" value="Войти" />
-          </div>
-        </ContainerForm>
+        <UserNameForm setActive={setActive} />
       </LoginContainer>
     </PopupBg>
   );
@@ -55,21 +22,12 @@ const LoginContainer = styled.div`
   background-color: white;
   height: 50%;
   width: 50vw;
+  max-width: 400px;
+  max-height: 250px;
   margin-top: 20px;
   opacity: 1;
   transform: scale(1);
   overflow-y: auto;
-`;
-
-const ContainerForm = styled.form`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const FormInput = styled.input`
-  margin: 5px;
 `;
 
 export const PopupBg = styled('div')<{ $active: boolean }>`
