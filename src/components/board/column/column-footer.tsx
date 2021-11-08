@@ -1,8 +1,9 @@
 import { ChangeEvent, FC, MouseEvent, useState } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import { useBoardContext } from '../../../context/board';
 import { addNewCard, Column } from '../../../store/board/index';
+import { columnTheme } from '../../../styles';
 
 interface ColumnFooterProps {
   column: Column;
@@ -36,25 +37,27 @@ export const ColumnFooter: FC<ColumnFooterProps> = ({ column }) => {
   };
 
   return (
-    <div>
-      {!active ? (
-        <Span onClick={() => setActive(true)}>+ Add card</Span>
-      ) : (
-        <div>
-          <Textarea
-            placeholder="Enter the header of card.."
-            value={text}
-            autoFocus
-            onChange={onChangeTextCard}
-            onBlur={onBlurTextCard}
-          ></Textarea>
+    <ThemeProvider theme={columnTheme}>
+      <div>
+        {!active ? (
+          <Span onClick={() => setActive(true)}>+ Add card</Span>
+        ) : (
           <div>
-            <Button onMouseDown={addCard}>+ Add card</Button>
-            <Span onMouseDown={onMouseDownClose}>X</Span>
+            <Textarea
+              placeholder="Enter the header of card.."
+              value={text}
+              autoFocus
+              onChange={onChangeTextCard}
+              onBlur={onBlurTextCard}
+            ></Textarea>
+            <div>
+              <Button onMouseDown={addCard}>+ Add card</Button>
+              <Span onMouseDown={onMouseDownClose}>X</Span>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </ThemeProvider>
   );
 };
 
@@ -68,5 +71,5 @@ const Button = styled.button`
 `;
 
 const Span = styled.span`
-  cursor: pointer;
+  ${({ theme: { buttons } }) => buttons.body.close};
 `;

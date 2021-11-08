@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import { useBoardContext } from '../../../context/board';
 import { addNewComment, Card } from '../../../store/board/index';
+import { cardTheme } from '../../../styles';
 
 interface CardProp {
   columnKey: string;
@@ -36,33 +37,39 @@ export const CardComments: FC<CardProp> = ({ columnKey, card }) => {
   };
 
   return (
-    <Container>
-      <p>Comments</p>
-      <Block>
-        <UserAvatar>{state.name.split('', 1)}</UserAvatar>
-        <Input>
-          {!active ? (
-            <Text onClick={() => setActive(true)}>Write a comment...</Text>
-          ) : (
-            <>
-              <TextArea
-                placeholder="Write a comment..."
-                value={textComment}
-                autoFocus
-                onChange={(e) => setTextComment(e.target.value)}
-                onBlur={blurCheckInput}
-              />
-              <button onClick={clickSaveComment}>Save</button>
-            </>
-          )}
-        </Input>
-      </Block>
-    </Container>
+    <ThemeProvider theme={cardTheme}>
+      <Container>
+        <Title>Comments</Title>
+        <Block>
+          <UserAvatar>{state.name.split('', 1)}</UserAvatar>
+          <Input>
+            {!active ? (
+              <Text onClick={() => setActive(true)}>Write a comment...</Text>
+            ) : (
+              <>
+                <TextArea
+                  placeholder="Write a comment..."
+                  value={textComment}
+                  autoFocus
+                  onChange={(e) => setTextComment(e.target.value)}
+                  onBlur={blurCheckInput}
+                />
+                <button onClick={clickSaveComment}>Save</button>
+              </>
+            )}
+          </Input>
+        </Block>
+      </Container>
+    </ThemeProvider>
   );
 };
 
 const Container = styled.div`
-  margin: 10px;
+  margin: ${(props) => props.theme.margin};
+`;
+
+const Title = styled.p`
+  ${({ theme: { typography } }) => typography.body.title};
 `;
 
 const UserAvatar = styled.span`
@@ -74,7 +81,7 @@ const UserAvatar = styled.span`
   border-radius: 25em;
   font-weight: 600;
   text-align: center;
-  width: 5%;
+  width: 20px;
   top: 0;
 `;
 
@@ -96,7 +103,7 @@ const Input = styled.div`
 
 const Text = styled.p`
   margin: 5px;
-  font-size: 0.9em;
+  ${({ theme: { typography } }) => typography.body.regular};
 `;
 
 const TextArea = styled.textarea`
@@ -106,7 +113,6 @@ const TextArea = styled.textarea`
   overflow: auto;
   outline: none;
   resize: none;
-  font-family: system-ui;
-  font-size: 0.9em;
+  ${({ theme: { typography } }) => typography.body.regular};
   margin: 5px;
 `;

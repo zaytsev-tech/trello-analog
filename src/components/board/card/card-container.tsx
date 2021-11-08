@@ -39,6 +39,7 @@ const CardWindow = styled.div`
   background-color: white;
   height: 50%;
   width: 50vw;
+  max-width: 600px;
   margin-top: 20px;
   opacity: 1;
   transform: scale(1);

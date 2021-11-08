@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import { useBoardContext } from '../../../context/board';
 import { Card, selectCardField, setDescription } from '../../../store/board/index';
+import { cardTheme } from '../../../styles';
 
 interface CardProp {
   columnKey: string;
@@ -31,49 +32,49 @@ export const CardDescription: FC<CardProp> = ({ columnKey, card }) => {
   };
 
   return (
-    <Container>
-      <Title>Description</Title>
-      {!active ? (
-        <>
-          {textDesc != '' ? (
-            <>
-              <button onClick={() => setActive(true)}>Change</button>
-              <div>
-                <Text onClick={() => setActive(true)}>{textDesc}</Text>
-              </div>
-            </>
-          ) : (
-            <EmptyDescription onClick={() => setActive(true)}>
-              <EmptyText>Add detailed description...</EmptyText>
-            </EmptyDescription>
-          )}
-        </>
-      ) : (
-        <div>
-          <TextArea
-            value={textDesc}
-            autoFocus
-            onChange={(e) => setTextDesc(e.target.value)}
-            onBlur={checkInnerText}
-          ></TextArea>
-          <Controller>
-            <button onClick={checkInnerText}>Save</button>
-            <Close onMouseDown={clickCancelChanges}>X</Close>
-          </Controller>
-        </div>
-      )}
-    </Container>
+    <ThemeProvider theme={cardTheme}>
+      <Container>
+        <Title>Description</Title>
+        {!active ? (
+          <>
+            {textDesc != '' ? (
+              <>
+                <button onClick={() => setActive(true)}>Change</button>
+                <div>
+                  <Text onClick={() => setActive(true)}>{textDesc}</Text>
+                </div>
+              </>
+            ) : (
+              <EmptyDescription onClick={() => setActive(true)}>
+                <EmptyText>Add detailed description...</EmptyText>
+              </EmptyDescription>
+            )}
+          </>
+        ) : (
+          <div>
+            <TextArea
+              value={textDesc}
+              autoFocus
+              onChange={(e) => setTextDesc(e.target.value)}
+              onBlur={checkInnerText}
+            ></TextArea>
+            <Controller>
+              <button onClick={checkInnerText}>Save</button>
+              <Close onMouseDown={clickCancelChanges}>X</Close>
+            </Controller>
+          </div>
+        )}
+      </Container>
+    </ThemeProvider>
   );
 };
 
 const Container = styled.div`
-  margin: 10px;
+  margin: ${(props) => props.theme.margin};
 `;
 
 const Title = styled.p`
-  display: inline-block;
-  margin-right: 5px;
-  word-break: break-all;s
+  ${({ theme: { typography } }) => typography.body.title};
 `;
 
 const Text = styled.p`
@@ -102,10 +103,10 @@ const Close = styled.span`
 const EmptyDescription = styled.div`
   background: gainsboro;
   padding: 10px;
-  font-size: 0.8em;
   height: 50px;
   cursor: pointer;
   max-width: 400px;
+  ${({ theme: { typography } }) => typography.body.regular};
 `;
 
 const EmptyText = styled.p`

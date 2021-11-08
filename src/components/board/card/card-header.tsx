@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import { useBoardContext } from '../../../context/board';
 import { Card, selectColumnName, setNameCard } from '../../../store/board/index';
+import { cardTheme } from '../../../styles';
 
 interface CardProp {
   columnKey: string;
@@ -26,30 +27,32 @@ export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
   };
 
   return (
-    <Header>
-      <Close onClick={close}>X</Close>
-      {!active ? (
-        <Title onClick={() => setActive(true)}>{nameCard}</Title>
-      ) : (
-        <Input
-          value={nameCard}
-          autoFocus
-          onChange={(e) => setName(e.target.value)}
-          onBlur={onBlurHeader}
-        ></Input>
-      )}
-      <Text>in column {selectColumnName(state, columnKey)}</Text>
-    </Header>
+    <ThemeProvider theme={cardTheme}>
+      <Header>
+        <Close onClick={close}>X</Close>
+        {!active ? (
+          <Title onClick={() => setActive(true)}>{nameCard}</Title>
+        ) : (
+          <Input
+            value={nameCard}
+            autoFocus
+            onChange={(e) => setName(e.target.value)}
+            onBlur={onBlurHeader}
+          ></Input>
+        )}
+        <Text>in column {selectColumnName(state, columnKey)}</Text>
+      </Header>
+    </ThemeProvider>
   );
 };
 
 const Header = styled.div`
   text-align: left;
-  margin: 10px;
+  margin: ${(props) => props.theme.margin};
 `;
 
 const Title = styled.h3`
-  margin: 0;
+  ${({ theme: { typography } }) => typography.body.header};
 `;
 
 const Input = styled.input`
@@ -62,12 +65,12 @@ const Text = styled.p`
   color: gray;
 `;
 
-const Close = styled.p`
+const Close = styled.span`
   position: absolute;
   display: block;
   text-align: right;
-  cursor: pointer;
   margin: 0;
   margin-right: 10px;
   right: 0;
+  ${({ theme: { buttons } }) => buttons.body.close};
 `;
