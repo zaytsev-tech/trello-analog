@@ -1,4 +1,4 @@
-import { Board } from '.';
+import { Board } from './types';
 
 export const initialState = {
   name: '',

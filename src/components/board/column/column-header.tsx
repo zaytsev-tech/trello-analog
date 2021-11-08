@@ -1,8 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 
 import { useBoardContext } from '../../../context/board';
-import { Column } from '../../store/board';
-import { setHeaderColumnName } from '../../store/board/actions';
+import { Column, setHeaderColumnName } from '../../../store/board/index';
 
 interface ColumnHeaderProps {
   column: Column;
@@ -13,7 +12,7 @@ export const ColumnHeader: FC<ColumnHeaderProps> = ({ column }) => {
   const [active, setActive] = useState(false);
   const [header, setHeader] = useState(column.name);
 
-  const innerHeader = () => {
+  const onBlurHeader = () => {
     if (header !== '') {
       setHeader(header);
       dispatch(setHeaderColumnName(column.key, header));
@@ -24,7 +23,7 @@ export const ColumnHeader: FC<ColumnHeaderProps> = ({ column }) => {
     }
   };
 
-  const changingHeader = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHeader = (e: ChangeEvent<HTMLInputElement>) => {
     setHeader(e.target.value);
   };
 
@@ -33,7 +32,7 @@ export const ColumnHeader: FC<ColumnHeaderProps> = ({ column }) => {
       {!active ? (
         <h3 onClick={() => setActive(true)}>{header}</h3>
       ) : (
-        <input value={header} autoFocus onChange={changingHeader} onBlur={innerHeader} />
+        <input value={header} autoFocus onChange={onChangeHeader} onBlur={onBlurHeader} />
       )}
     </div>
   );

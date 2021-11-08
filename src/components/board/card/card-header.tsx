@@ -2,8 +2,7 @@ import { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { useBoardContext } from '../../../context/board';
-import { Card, selectColumnName } from '../../store/board';
-import { setNameCard } from '../../store/board/index';
+import { Card, selectColumnName, setNameCard } from '../../../store/board/index';
 
 interface CardProp {
   columnKey: string;
@@ -16,7 +15,7 @@ export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
   const [active, setActive] = useState(false);
   const [nameCard, setName] = useState(card.name);
 
-  const innerHeader = () => {
+  const onBlurHeader = () => {
     if (nameCard !== '') {
       const cardKey = card.key;
       dispatch(setNameCard({ columnId: columnKey, cardId: cardKey, value: nameCard }));
@@ -27,43 +26,43 @@ export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
   };
 
   return (
-    <HeaderContainer>
-      <HeaderContainerClose onClick={close}>X</HeaderContainerClose>
+    <Header>
+      <Close onClick={close}>X</Close>
       {!active ? (
-        <HeaderContainerH3 onClick={() => setActive(true)}>{nameCard}</HeaderContainerH3>
+        <Title onClick={() => setActive(true)}>{nameCard}</Title>
       ) : (
-        <HeaderContainerInput
+        <Input
           value={nameCard}
           autoFocus
           onChange={(e) => setName(e.target.value)}
-          onBlur={innerHeader}
-        ></HeaderContainerInput>
+          onBlur={onBlurHeader}
+        ></Input>
       )}
-      <HeaderContainerP>in column {selectColumnName(state, columnKey)}</HeaderContainerP>
-    </HeaderContainer>
+      <Text>in column {selectColumnName(state, columnKey)}</Text>
+    </Header>
   );
 };
 
-const HeaderContainer = styled.div`
+const Header = styled.div`
   text-align: left;
   margin: 10px;
 `;
 
-const HeaderContainerH3 = styled.h3`
+const Title = styled.h3`
   margin: 0;
 `;
 
-const HeaderContainerInput = styled.input`
+const Input = styled.input`
   font-size: 1.17em;
 `;
 
-const HeaderContainerP = styled.p`
+const Text = styled.p`
   margin-top: 5px;
   font-size: 0.7em;
   color: gray;
 `;
 
-const HeaderContainerClose = styled.p`
+const Close = styled.p`
   position: absolute;
   display: block;
   text-align: right;

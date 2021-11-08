@@ -2,8 +2,7 @@ import { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { useBoardContext } from '../../../context/board';
-import { Card } from '../../store/board';
-import { addNewComment } from '../../store/board/actions';
+import { addNewComment, Card } from '../../../store/board/index';
 
 interface CardProp {
   columnKey: string;
@@ -15,13 +14,13 @@ export const CardComments: FC<CardProp> = ({ columnKey, card }) => {
   const [active, setActive] = useState(false);
   const [textComment, setTextComment] = useState('');
 
-  const checkEmptyInput = () => {
+  const blurCheckInput = () => {
     if (textComment === '') {
       setActive(false);
     }
   };
 
-  const saveComment = () => {
+  const clickSaveComment = () => {
     if (textComment !== '') {
       dispatch(
         addNewComment({
@@ -37,34 +36,32 @@ export const CardComments: FC<CardProp> = ({ columnKey, card }) => {
   };
 
   return (
-    <CommentsContainer>
+    <Container>
       <p>Comments</p>
-      <BasicCommentBlock>
+      <Block>
         <UserAvatar>{state.name.split('', 1)}</UserAvatar>
-        <InputCommentBlock>
+        <Input>
           {!active ? (
-            <InputCommentP onClick={() => setActive(true)}>
-              Write a comment...
-            </InputCommentP>
+            <Text onClick={() => setActive(true)}>Write a comment...</Text>
           ) : (
             <>
-              <InputCommentTA
+              <TextArea
                 placeholder="Write a comment..."
                 value={textComment}
                 autoFocus
                 onChange={(e) => setTextComment(e.target.value)}
-                onBlur={checkEmptyInput}
+                onBlur={blurCheckInput}
               />
-              <button onClick={saveComment}>Save</button>
+              <button onClick={clickSaveComment}>Save</button>
             </>
           )}
-        </InputCommentBlock>
-      </BasicCommentBlock>
-    </CommentsContainer>
+        </Input>
+      </Block>
+    </Container>
   );
 };
 
-const CommentsContainer = styled.div`
+const Container = styled.div`
   margin: 10px;
 `;
 
@@ -81,13 +78,13 @@ const UserAvatar = styled.span`
   top: 0;
 `;
 
-const BasicCommentBlock = styled.div`
+const Block = styled.div`
   display: block;
   position: relative;
   height: 50px;
 `;
 
-const InputCommentBlock = styled.div`
+const Input = styled.div`
   position: relative;
   display: inline-block;
   margin-left: 5px;
@@ -97,12 +94,12 @@ const InputCommentBlock = styled.div`
   max-width: 400px;
 `;
 
-const InputCommentP = styled.p`
+const Text = styled.p`
   margin: 5px;
   font-size: 0.9em;
 `;
 
-const InputCommentTA = styled.textarea`
+const TextArea = styled.textarea`
   width: -webkit-fill-available !important;
   outline: none;
   border: none;

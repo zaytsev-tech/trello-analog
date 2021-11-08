@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Column } from '../../store/board/index';
+import { Column } from '../../../store/board/index';
 import { ColumnCard } from './column-card';
 
 interface CardsProps {
@@ -10,15 +10,15 @@ interface CardsProps {
 
 export const ColumnCardsList: FC<CardsProps> = ({ column }) => {
   return (
-    <CardsListStyle>
+    <List>
       {Object.values(column.cards).map((card) => (
         <ColumnCard key={card.key} columnKey={column.key} card={card} />
       ))}
-    </CardsListStyle>
+    </List>
   );
 };
 
-const CardsListStyle = styled.div`
+const List = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 `;

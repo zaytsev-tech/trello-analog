@@ -1,15 +1,15 @@
 import { BoardPlace } from './components/board';
-import { LoginForm } from './components/login/index';
-import { StorProvider } from './components/provider/storage-provider';
+import { BoardProvider } from './components/providers/index';
+import { UserForm } from './components/user/index';
 import { GlobalStyle } from './styles/index';
 
 function App() {
   return (
     <div className="App">
-      <StorProvider>
-        <LoginForm />
+      <BoardProvider>
+        <UserForm />
         <BoardPlace />
-      </StorProvider>
+      </BoardProvider>
       <GlobalStyle />
     </div>
   );

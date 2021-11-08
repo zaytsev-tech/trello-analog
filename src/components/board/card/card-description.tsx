@@ -2,9 +2,7 @@ import { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { useBoardContext } from '../../../context/board';
-import { Card } from '../../store/board';
-import { setDescription } from '../../store/board/actions';
-import { selectCardField } from '../../store/board/selectors';
+import { Card, selectCardField, setDescription } from '../../../store/board/index';
 
 interface CardProp {
   columnKey: string;
@@ -16,12 +14,12 @@ export const CardDescription: FC<CardProp> = ({ columnKey, card }) => {
   const [active, setActive] = useState(false);
   const [textDesc, setTextDesc] = useState(card.description);
 
-  const innerText = () => {
+  const checkInnerText = () => {
     dispatch(setDescription({ columnId: columnKey, cardId: card.key, value: textDesc }));
     setActive(false);
   };
 
-  const cancelInputChanges = () => {
+  const clickCancelChanges = () => {
     setTextDesc(
       selectCardField(
         state,
@@ -33,75 +31,70 @@ export const CardDescription: FC<CardProp> = ({ columnKey, card }) => {
   };
 
   return (
-    <DescriptionContainer>
-      <DescriptionHeadP>Description</DescriptionHeadP>
+    <Container>
+      <Title>Description</Title>
       {!active ? (
         <>
           {textDesc != '' ? (
             <>
               <button onClick={() => setActive(true)}>Change</button>
               <div>
-                <DescriptionContainerP onClick={() => setActive(true)}>
-                  {textDesc}
-                </DescriptionContainerP>
+                <Text onClick={() => setActive(true)}>{textDesc}</Text>
               </div>
             </>
           ) : (
             <EmptyDescription onClick={() => setActive(true)}>
-              <EmptyDescriptionP>Add detailed description...</EmptyDescriptionP>
+              <EmptyText>Add detailed description...</EmptyText>
             </EmptyDescription>
           )}
         </>
       ) : (
         <div>
-          <DescriptionContainerTA
+          <TextArea
             value={textDesc}
             autoFocus
             onChange={(e) => setTextDesc(e.target.value)}
-            onBlur={innerText}
-          ></DescriptionContainerTA>
-          <ControllerTA>
-            <ControllerButtonTA onClick={innerText}>Save</ControllerButtonTA>
-            <ControllerCloseTA onMouseDown={cancelInputChanges}>X</ControllerCloseTA>
-          </ControllerTA>
+            onBlur={checkInnerText}
+          ></TextArea>
+          <Controller>
+            <button onClick={checkInnerText}>Save</button>
+            <Close onMouseDown={clickCancelChanges}>X</Close>
+          </Controller>
         </div>
       )}
-    </DescriptionContainer>
+    </Container>
   );
 };
 
-const DescriptionContainer = styled.div`
+const Container = styled.div`
   margin: 10px;
 `;
 
-const DescriptionHeadP = styled.p`
+const Title = styled.p`
   display: inline-block;
   margin-right: 5px;
   word-break: break-all;s
 `;
 
-const DescriptionContainerP = styled.p`
+const Text = styled.p`
   word-break: break-all;
   cursor: pointer;
 `;
 
-const DescriptionContainerTA = styled.textarea`
+const TextArea = styled.textarea`
   position: relative;
   max-width: 400px;
   width: 90%;
   height: 100px;
 `;
 
-const ControllerTA = styled.div`
+const Controller = styled.div`
   margin-top: 5px;
   display: flex;
 `;
 
-const ControllerButtonTA = styled.button`
-  margin-right: 5px;
-`;
-
-const ControllerCloseTA = styled.span`
+const Close = styled.span`
+  margin-left: 5px;
   align-self: center;
   cursor: pointer;
 `;
@@ -115,6 +108,6 @@ const EmptyDescription = styled.div`
   max-width: 400px;
 `;
 
-const EmptyDescriptionP = styled.p`
+const EmptyText = styled.p`
   margin: 0;
 `;

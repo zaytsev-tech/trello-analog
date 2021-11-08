@@ -2,8 +2,7 @@ import { ChangeEvent, FC, MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 
 import { useBoardContext } from '../../../context/board';
-import { Column } from '../../store/board';
-import { addNewCard } from '../../store/board/actions';
+import { addNewCard, Column } from '../../../store/board/index';
 
 interface ColumnFooterProps {
   column: Column;
@@ -14,7 +13,7 @@ export const ColumnFooter: FC<ColumnFooterProps> = ({ column }) => {
   const [active, setActive] = useState(false);
   const [text, setText] = useState('');
 
-  const innerTextCard = () => {
+  const onBlurTextCard = () => {
     if (text !== '' && active !== false) {
       dispatch(addNewCard(column.key, text));
       setText('');
@@ -22,17 +21,17 @@ export const ColumnFooter: FC<ColumnFooterProps> = ({ column }) => {
     setActive(false);
   };
 
-  const changingTextCard = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeTextCard = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
 
-  const closeInput = () => {
+  const onMouseDownClose = () => {
     setActive(false);
     setText('');
   };
 
-  const buttonAddCard = (e: MouseEvent) => {
-    text !== '' ? innerTextCard() : setActive(true);
+  const addCard = (e: MouseEvent) => {
+    text !== '' ? onBlurTextCard() : setActive(true);
     e.preventDefault();
   };
 
@@ -46,12 +45,12 @@ export const ColumnFooter: FC<ColumnFooterProps> = ({ column }) => {
             placeholder="Enter the header of card.."
             value={text}
             autoFocus
-            onChange={changingTextCard}
-            onBlur={innerTextCard}
+            onChange={onChangeTextCard}
+            onBlur={onBlurTextCard}
           ></Textarea>
           <div>
-            <ButtonAdd onMouseDown={buttonAddCard}>+ Add card</ButtonAdd>
-            <Span onMouseDown={closeInput}>X</Span>
+            <Button onMouseDown={addCard}>+ Add card</Button>
+            <Span onMouseDown={onMouseDownClose}>X</Span>
           </div>
         </div>
       )}
@@ -64,7 +63,7 @@ const Textarea = styled.textarea`
   margin-bottom: 5px;
 `;
 
-const ButtonAdd = styled.button`
+const Button = styled.button`
   margin-right: 5px;
 `;
 

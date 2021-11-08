@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Column } from '../../store/board/index';
+import { Column } from '../../../store/board/index';
 import { ColumnCardsList } from './column-cards-list';
 import { ColumnFooter } from './column-footer';
 import { ColumnHeader } from './column-header';
@@ -12,15 +12,15 @@ interface ColumnProps {
 
 export const ColumnContainer: FC<ColumnProps> = ({ column }) => {
   return (
-    <ColumnContainerStyle>
+    <Container>
       <ColumnHeader column={column} />
       <ColumnCardsList column={column} />
       <ColumnFooter column={column} />
-    </ColumnContainerStyle>
+    </Container>
   );
 };
 
-export const ColumnContainerStyle = styled.div`
+export const Container = styled.div`
   margin: 15px;
   padding: 10px;
   background: lavender;

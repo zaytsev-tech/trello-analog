@@ -2,8 +2,8 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 import { Modal } from '../../../portal';
-import { PopupBg } from '../../login/login-form';
-import { Card } from '../../store/board';
+import { Card } from '../../../store/board';
+import { PopupBg } from '../../user/user-form';
 import { CardComments } from './card-comments';
 import { CardDescription } from './card-description';
 import { CardHeader } from './card-header';
@@ -16,14 +16,14 @@ interface CardProps {
 }
 
 export const CardContainer: FC<CardProps> = ({ columnKey, card, status, change }) => {
-  const checkoutPopup = () => {
+  const clickCheckoutPopup = () => {
     change(false);
   };
   return (
     <Modal>
-      <PopupBg $active={status} onClick={checkoutPopup}>
+      <PopupBg $active={status} onClick={clickCheckoutPopup}>
         <CardWindow onClick={(e) => e.stopPropagation()}>
-          <CardHeader card={card} columnKey={columnKey} close={checkoutPopup} />
+          <CardHeader card={card} columnKey={columnKey} close={clickCheckoutPopup} />
           <CardDescription card={card} columnKey={columnKey} />
           <CardComments card={card} columnKey={columnKey} />
         </CardWindow>

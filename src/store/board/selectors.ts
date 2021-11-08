@@ -1,5 +1,4 @@
-import { Card } from '.';
-import { Board } from './types';
+import { Board, Card } from './types';
 
 export const selectColumnName = (state: Board, uuid: string) => {
   for (const key in state.columns) {

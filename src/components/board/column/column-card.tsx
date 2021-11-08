@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 
-import { Card } from '../../store/board/index';
+import { Card } from '../../../store/board/index';
 import { CardContainer } from '../card/index';
 
 interface CardProps {
