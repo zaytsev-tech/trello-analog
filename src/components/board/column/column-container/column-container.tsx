@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Column } from '../../../store/board/index';
-import { ColumnCardsList } from './column-cards-list';
-import { ColumnFooter } from './column-footer';
-import { ColumnHeader } from './column-header';
+import { Column } from '../../../../store/board';
+import { ColumnCardsList } from '../column-cards-list';
+import { ColumnFooter } from '../column-footer';
+import { ColumnHeader } from '../column-header';
 
 interface ColumnProps {
   column: Column;

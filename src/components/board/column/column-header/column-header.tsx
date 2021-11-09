@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 
-import { useBoardContext } from '../../../context/board';
-import { Column, setHeaderColumnName } from '../../../store/board/index';
+import { useBoardContext } from '../../../../context/board';
+import { Column, setHeaderColumnName } from '../../../../store/board';
 
 interface ColumnHeaderProps {
   column: Column;
@@ -15,7 +15,7 @@ export const ColumnHeader: FC<ColumnHeaderProps> = ({ column }) => {
   const onBlurHeader = () => {
     if (header !== '') {
       setHeader(header);
-      dispatch(setHeaderColumnName(column.key, header));
+      dispatch(setHeaderColumnName({ columnKey: column.key, value: header }));
       setActive(false);
     } else {
       setHeader(column.name);

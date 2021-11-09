@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../../context/board';
-import { Card, selectColumnName } from '../../../store/board/index';
-import { InputHeader } from '../../ui';
-import { DeleteCard } from '../../ui/delete-card';
+import { useBoardContext } from '../../../../context/board';
+import { Card, selectColumnName } from '../../../../store/board';
+import { ButtonClose } from '../../../ui';
+import { DeleteCard, InputHeader } from '../../../use-case';
 
 interface CardProp {
   columnKey: string;
@@ -18,7 +18,7 @@ export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
 
   return (
     <Header>
-      <Close onClick={close}>X</Close>
+      <Close className={Close} onClick={close} />
       <InputHeader
         columnKey={columnKey}
         card={card}
@@ -42,12 +42,11 @@ const Text = styled.p`
   color: gray;
 `;
 
-const Close = styled.span`
+const Close = styled(ButtonClose)`
   position: absolute;
   display: block;
   text-align: right;
   margin: 0;
   margin-right: 10px;
   right: 0;
-  ${({ theme: { buttons } }) => buttons.body.close};
 `;

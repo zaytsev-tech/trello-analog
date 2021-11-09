@@ -1,9 +1,9 @@
 import { ThemeProvider } from 'styled-components';
 
-import { BoardPlace } from './components/board';
-import { BoardProvider } from './components/providers/index';
-import { UserForm } from './components/user/index';
-import { GlobalStyle, theme } from './styles/index';
+import { BoardPlace } from './components/board/board-place';
+import { BoardProvider } from './components/providers';
+import { UserForm } from './components/user';
+import { GlobalStyle, theme } from './styles';
 
 function App() {
   return (

@@ -1,21 +1,19 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Card } from '../../../store/board';
-import { InputNewComment } from '../../ui';
-import { CommentsList } from './comments/comments-list';
+import { Card } from '../../../../store/board';
+import { InputDescription } from '../../../use-case';
 
 interface CardProp {
   columnKey: string;
   card: Card;
 }
 
-export const CardComments: FC<CardProp> = ({ columnKey, card }) => {
+export const CardDescription: FC<CardProp> = ({ columnKey, card }) => {
   return (
     <Container>
-      <Title>Comments</Title>
-      <InputNewComment columnKey={columnKey} card={card} />
-      <CommentsList card={card} />
+      <Title>Description</Title>
+      <InputDescription columnKey={columnKey} card={card} />
     </Container>
   );
 };

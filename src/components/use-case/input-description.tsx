@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { useBoardContext } from '../../context/board';
 import { Card, selectCardField, setDescription } from '../../store/board';
+import { ButtonClose, ButtonSave } from '../ui';
 
 interface CardProp {
   columnKey: string;
@@ -56,8 +57,8 @@ export const InputDescription: FC<CardProp> = ({ columnKey, card }) => {
             onBlur={checkInnerText}
           ></TextArea>
           <Controller>
-            <button onClick={checkInnerText}>Save</button>
-            <Close onMouseDown={clickCancelChanges}>X</Close>
+            <ButtonSave onClick={checkInnerText} />
+            <Close className={Close} onMouseDown={clickCancelChanges} />
           </Controller>
         </div>
       )}
@@ -83,7 +84,7 @@ const Controller = styled.div`
   display: flex;
 `;
 
-const Close = styled.span`
+const Close = styled(ButtonClose)`
   margin-left: 5px;
   align-self: center;
   cursor: pointer;

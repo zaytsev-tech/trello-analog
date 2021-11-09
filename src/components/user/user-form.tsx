@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { UserNameForm } from '../ui';
+import { UserNameForm } from '../use-case';
 
 function UserForm() {
   const [active, setActive] = useState(true);

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { useBoardContext } from '../../context/board';
 import { addNewCard, Column } from '../../store/board';
+import { ButtonClose } from '../ui';
 
 interface InputProps {
   column: Column;
@@ -16,7 +17,7 @@ export const InputNameCard: FC<InputProps> = ({ column, active, setActive }) => 
 
   const onBlurTextCard = () => {
     if (text !== '' && active !== false) {
-      dispatch(addNewCard(column.key, text));
+      dispatch(addNewCard({ columnKey: column.key, value: text }));
       setText('');
     }
     setActive(false);
@@ -47,15 +48,11 @@ export const InputNameCard: FC<InputProps> = ({ column, active, setActive }) => 
       ></Textarea>
       <div>
         <Button onMouseDown={addCard}>+ Add card</Button>
-        <Span onMouseDown={onMouseDownClose}>X</Span>
+        <ButtonClose onMouseDown={onMouseDownClose} />
       </div>
     </div>
   );
 };
-
-const Span = styled.span`
-  ${({ theme: { buttons } }) => buttons.body.close};
-`;
 
 const Textarea = styled.textarea`
   width: -webkit-fill-available;

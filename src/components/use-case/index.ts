@@ -4,3 +4,5 @@ export { InputHeader } from './input-header';
 export { InputNameCard } from './input-name-card';
 export { UserNameForm } from './username-form';
 export { InputCurrentComment } from './input-curr-comment';
+export { DeleteCard } from './delete-card';
+export { ButtonsCommentControl } from './buttons-comment-control';

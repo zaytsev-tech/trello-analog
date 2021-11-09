@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 
-import { Card } from '../../../store/board/index';
-import { CardContainer } from '../card/index';
+import { Card } from '../../../../store/board';
+import { CardContainer } from '../../card';
 
 interface CardProps {
   columnKey: string;

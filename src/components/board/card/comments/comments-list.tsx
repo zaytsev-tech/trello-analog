@@ -5,15 +5,23 @@ import { Card } from '../../../../store/board';
 import { CommentContainer } from './comment-container';
 
 interface CommentListProp {
+  columnKey: string;
   card: Card;
 }
 
-export const CommentsList: FC<CommentListProp> = ({ card }) => {
+export const CommentsList: FC<CommentListProp> = ({ columnKey, card }) => {
   return (
     <List>
-      {Object.values(card.comments).map((comment) => (
-        <CommentContainer key={comment.key} comment={comment} />
-      ))}
+      {Object.values(card.comments)
+        .reverse()
+        .map((comment) => (
+          <CommentContainer
+            key={comment.key}
+            columnKey={columnKey}
+            cardKey={card.key}
+            comment={comment}
+          />
+        ))}
     </List>
   );
 };

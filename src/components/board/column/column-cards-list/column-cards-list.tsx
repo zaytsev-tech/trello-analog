@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Column } from '../../../store/board/index';
-import { ColumnCard } from './column-card';
+import { Column } from '../../../../store/board';
+import { ColumnCard } from '../column-card';
 
 interface CardsProps {
   column: Column;

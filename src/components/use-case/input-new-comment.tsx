@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { useBoardContext } from '../../context/board';
 import { addNewComment, Card } from '../../store/board';
+import { ButtonSave } from '../ui';
 
 interface CardProp {
   columnKey: string;
@@ -50,7 +51,7 @@ export const InputNewComment: FC<CardProp> = ({ columnKey, card }) => {
               onChange={(e) => setTextComment(e.target.value)}
               onBlur={blurCheckInput}
             />
-            <button onClick={clickSaveComment}>Save</button>
+            <Save className={Save} onClick={clickSaveComment} />
           </>
         )}
       </Input>
@@ -66,6 +67,10 @@ const Block = styled.div`
   display: block;
   position: relative;
   height: fit-content;
+`;
+
+const Save = styled(ButtonSave)`
+  margin: 5px;
 `;
 
 const Input = styled.div`

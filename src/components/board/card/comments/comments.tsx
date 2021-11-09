@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Card } from '../../../../store/board/index';
-import { InputNewComment } from '../../../use-case/index';
+import { Card } from '../../../../store/board';
+import { InputNewComment } from '../../../use-case';
 import { CommentsList } from './comments-list';
 
 interface CardProp {
@@ -15,7 +15,7 @@ export const Comments: FC<CardProp> = ({ columnKey, card }) => {
     <Container>
       <Title>Comments</Title>
       <InputNewComment columnKey={columnKey} card={card} />
-      <CommentsList card={card} />
+      <CommentsList card={card} columnKey={columnKey} />
     </Container>
   );
 };

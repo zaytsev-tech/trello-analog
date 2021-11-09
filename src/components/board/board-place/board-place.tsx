@@ -1,5 +1,5 @@
-import { useBoardContext } from '../../context/board/index';
-import { ColumnContainer } from './column/index';
+import { useBoardContext } from '../../../context/board';
+import { ColumnContainer } from '../column';
 
 function BoardPlace() {
   const [state] = useBoardContext();
