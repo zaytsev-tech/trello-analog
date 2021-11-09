@@ -1,4 +1,4 @@
-export type { Board, Card, Column } from './types';
+export type { Board, Card, Column, Comment } from './types';
 export {
   setUsername,
   setHeaderColumnName,

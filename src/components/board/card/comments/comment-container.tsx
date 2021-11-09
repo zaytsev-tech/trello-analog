@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Comment } from '../../../../store/board/index';
+import { Comment } from '../../../../store/board';
 import { InputCurrentComment } from '../../../use-case';
 
 interface CommentProps {
