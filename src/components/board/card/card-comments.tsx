@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Card } from '../../../store/board/index';
-import { InputNewComment } from '../../ui/index';
+import { Card } from '../../../store/board';
+import { InputNewComment } from '../../ui';
+import { CommentsList } from './comments/comments-list';
 
 interface CardProp {
   columnKey: string;
@@ -14,6 +15,7 @@ export const CardComments: FC<CardProp> = ({ columnKey, card }) => {
     <Container>
       <Title>Comments</Title>
       <InputNewComment columnKey={columnKey} card={card} />
+      <CommentsList card={card} />
     </Container>
   );
 };
