@@ -1,9 +1,9 @@
 import { ChangeEvent, Dispatch, FC, MouseEvent, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../context/board';
-import { addNewCard, Column } from '../../store/board';
-import { ButtonClose } from '../ui';
+import { useBoardContext } from '../../../context/board';
+import { addNewCard, Column } from '../../../store/board';
+import { CloseButton } from '../../ui';
 
 interface InputProps {
   column: Column;
@@ -48,7 +48,7 @@ export const InputNameCard: FC<InputProps> = ({ column, active, setActive }) => 
       ></Textarea>
       <div>
         <Button onMouseDown={addCard}>+ Add card</Button>
-        <ButtonClose onMouseDown={onMouseDownClose} />
+        <CloseButton onMouseDown={onMouseDownClose} />
       </div>
     </div>
   );

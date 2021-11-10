@@ -1,10 +1,11 @@
-import { buttons } from './buttons';
 import { typography } from './typography';
-import { avatar } from './user-avatar';
 
 export const theme = {
   margin: '10px',
+  colors: {
+    white: '#fff',
+    black: '#1f1f1f',
+    column: '#bfdbf5',
+  },
   typography,
-  buttons,
-  avatar,
 };

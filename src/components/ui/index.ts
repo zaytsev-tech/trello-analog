@@ -1,1 +1,2 @@
-export { ButtonClose, ButtonSave } from './buttons';
+export { Button, CloseButton, SaveButton } from './buttons';
+export { UserAvatar } from './user-avatar';

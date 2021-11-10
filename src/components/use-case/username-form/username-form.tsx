@@ -1,8 +1,8 @@
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../context/board';
-import { setUsername } from '../../store/board';
+import { useBoardContext } from '../../../context/board';
+import { setUsername } from '../../../store/board';
 
 interface UserNameProps {
   setActive: Dispatch<SetStateAction<boolean>>;

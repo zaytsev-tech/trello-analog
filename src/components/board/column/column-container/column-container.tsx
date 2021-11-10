@@ -23,7 +23,7 @@ export const ColumnContainer: FC<ColumnProps> = ({ column }) => {
 export const Container = styled.div`
   margin: 15px;
   padding: 10px;
-  background: lavender;
+  background: ${({ theme: { colors } }) => colors.column};
   width: 300px;
   max-width: 700px;
   border-radius: 5px;

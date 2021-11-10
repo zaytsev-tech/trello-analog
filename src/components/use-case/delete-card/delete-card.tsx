@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { useBoardContext } from '../../context/board';
-import { deleteCard } from '../../store/board';
+import { useBoardContext } from '../../../context/board';
+import { deleteCard } from '../../../store/board';
 
 interface DelCardProp {
   columnKey: string;

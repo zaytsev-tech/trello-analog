@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { UserNameForm } from '../use-case';
+import { UserNameForm } from '../../use-case';
 
-function UserForm() {
+export function UserForm() {
   const [active, setActive] = useState(true);
 
   return (
@@ -19,7 +19,7 @@ const LoginContainer = styled.div`
   display: block;
   position: relative;
   border-radius: 12px;
-  background-color: white;
+  background-color: ${({ theme: { colors } }) => colors.white};
   height: 50%;
   width: 50vw;
   max-width: 400px;

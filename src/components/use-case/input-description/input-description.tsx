@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../context/board';
-import { Card, selectCardField, setDescription } from '../../store/board';
-import { ButtonClose, ButtonSave } from '../ui';
+import { useBoardContext } from '../../../context/board';
+import { Card, selectCardField, setDescription } from '../../../store/board';
+import { CloseButton, SaveButton } from '../../ui';
 
 interface CardProp {
   columnKey: string;
@@ -57,7 +57,7 @@ export const InputDescription: FC<CardProp> = ({ columnKey, card }) => {
             onBlur={checkInnerText}
           ></TextArea>
           <Controller>
-            <ButtonSave onClick={checkInnerText} />
+            <SaveButton onClick={checkInnerText} />
             <Close className={Close} onMouseDown={clickCancelChanges} />
           </Controller>
         </div>
@@ -84,7 +84,7 @@ const Controller = styled.div`
   display: flex;
 `;
 
-const Close = styled(ButtonClose)`
+const Close = styled(CloseButton)`
   margin-left: 5px;
   align-self: center;
   cursor: pointer;

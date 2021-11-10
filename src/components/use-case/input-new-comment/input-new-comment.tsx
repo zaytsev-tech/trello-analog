@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../context/board';
-import { addNewComment, Card } from '../../store/board';
-import { ButtonSave } from '../ui';
+import { useBoardContext } from '../../../context/board';
+import { addNewComment, Card } from '../../../store/board';
+import { SaveButton, UserAvatar } from '../../ui';
 
 interface CardProp {
   columnKey: string;
@@ -38,7 +38,7 @@ export const InputNewComment: FC<CardProp> = ({ columnKey, card }) => {
 
   return (
     <Block>
-      <UserAvatar>{state.name.split('', 1)}</UserAvatar>
+      <UserAvatar text={state.name.slice(0, 1)} />
       <Input>
         {!active ? (
           <Text onClick={() => setActive(true)}>Write a comment...</Text>
@@ -59,17 +59,13 @@ export const InputNewComment: FC<CardProp> = ({ columnKey, card }) => {
   );
 };
 
-const UserAvatar = styled.span`
-  ${({ theme: { avatar } }) => avatar.body.main};
-`;
-
 const Block = styled.div`
   display: block;
   position: relative;
   height: fit-content;
 `;
 
-const Save = styled(ButtonSave)`
+const Save = styled(SaveButton)`
   margin: 5px;
 `;
 

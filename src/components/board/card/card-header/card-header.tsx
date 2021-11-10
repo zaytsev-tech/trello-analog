@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useBoardContext } from '../../../../context/board';
 import { Card, selectColumnName } from '../../../../store/board';
-import { ButtonClose } from '../../../ui';
+import { CloseButton } from '../../../ui';
 import { DeleteCard, InputHeader } from '../../../use-case';
 
 interface CardProp {
@@ -42,7 +42,7 @@ const Text = styled.p`
   color: gray;
 `;
 
-const Close = styled(ButtonClose)`
+const Close = styled(CloseButton)`
   position: absolute;
   display: block;
   text-align: right;

@@ -1,8 +1,8 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
-import { Comment } from '../../store/board';
-import { ButtonClose, ButtonSave } from '../ui';
+import { Comment } from '../../../store/board';
+import { CloseButton, SaveButton } from '../../ui';
 
 interface CurrentCommentProp {
   comment: Comment;
@@ -33,7 +33,7 @@ export const InputCurrentComment: FC<CurrentCommentProp> = ({
         <Input>
           <TextArea value={text} autoFocus onChange={(e) => setText(e.target.value)} />
           <Save className={Save} onClick={() => onSave(text)} />
-          <ButtonClose onClick={onClickClose} />
+          <CloseButton onClick={onClickClose} />
         </Input>
       )}
     </>
@@ -47,7 +47,7 @@ const Author = styled.p`
   font-weight: 500;
 `;
 
-const Save = styled(ButtonSave)`
+const Save = styled(SaveButton)`
   margin: 5px;
 `;
 

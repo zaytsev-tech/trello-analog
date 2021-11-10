@@ -1,8 +1,8 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../context/board';
-import { Card, setNameCard } from '../../store/board';
+import { useBoardContext } from '../../../context/board';
+import { Card, setNameCard } from '../../../store/board';
 
 interface CardProp {
   columnKey: string;

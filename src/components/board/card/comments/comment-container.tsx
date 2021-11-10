@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useBoardContext } from '../../../../context/board';
 import { Comment, deleteComment } from '../../../../store/board';
 import { saveChangesComment } from '../../../../store/board/actions';
+import { UserAvatar } from '../../../ui';
 import { ButtonsCommentControl, InputCurrentComment } from '../../../use-case';
 
 interface CommentProps {
@@ -36,7 +37,7 @@ export const CommentContainer: FC<CommentProps> = ({ columnKey, cardKey, comment
 
   return (
     <div>
-      <UserAvatar>{comment.author.slice(0, 1)}</UserAvatar>
+      <UserAvatar text={comment.author.slice(0, 1)} />
       <Container>
         <InputCurrentComment
           comment={comment}
@@ -53,10 +54,6 @@ export const CommentContainer: FC<CommentProps> = ({ columnKey, cardKey, comment
     </div>
   );
 };
-
-const UserAvatar = styled.div`
-  ${({ theme: { avatar } }) => avatar.body.main};
-`;
 
 const Container = styled.div`
   display: grid;
