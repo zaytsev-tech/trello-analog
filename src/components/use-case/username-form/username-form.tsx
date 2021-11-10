@@ -30,19 +30,16 @@ export const UserNameForm: FC<UserNameProps> = ({ setActive }) => {
     <Form onSubmit={onSubmitForm} initialValues={userFormDefaultValues}>
       {({ handleSubmit }) => (
         <ContainerForm onSubmit={handleSubmit}>
-          <label>
-            Your name:
+          <div>
             <Field
               type="text"
               name="name"
               render={({ input: { value, onChange } }) => (
-                <FormInput value={value} onChange={onChange} />
+                <FormInput value={value} placeholder="Your name..." onChange={onChange} />
               )}
             />
-          </label>
-          <div>
-            <button type="submit">Log in</button>
           </div>
+          <button type="submit">Log in</button>
         </ContainerForm>
       )}
     </Form>
@@ -54,8 +51,9 @@ const ContainerForm = styled.form`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
 `;
 
 const FormInput = styled.input`
-  margin: 5px;
+  margin-bottom: 5px;
 `;

@@ -1,4 +1,5 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Field, Form } from 'react-final-form';
 import styled from 'styled-components';
 
 import { Comment } from '../../../store/board';
@@ -30,11 +31,25 @@ export const InputCurrentComment: FC<CurrentCommentProp> = ({
       {!active ? (
         <Text>{text}</Text>
       ) : (
-        <Input>
-          <TextArea value={text} autoFocus onChange={(e) => setText(e.target.value)} />
-          <Save className={Save} onClick={() => onSave(text)} />
-          <CloseButton onClick={onClickClose} />
-        </Input>
+        <Form
+          onSubmit={onSave}
+          initialValues={{ comment: comment.text }}
+          render={({ handleSubmit }) => (
+            <Input onSubmit={handleSubmit}>
+              <Field
+                name="comment"
+                type="text"
+                render={({ input: { value, onChange } }) => (
+                  <>
+                    <TextArea value={value} onChange={onChange} autoFocus />
+                    <Save className={Save} onClick={handleSubmit} />
+                  </>
+                )}
+              ></Field>
+              <CloseButton onClick={onClickClose} />
+            </Input>
+          )}
+        ></Form>
       )}
     </>
   );
@@ -70,7 +85,7 @@ const TextArea = styled.textarea`
   margin: 5px;
 `;
 
-const Input = styled.div`
+const Input = styled.form`
   position: relative;
   display: inline-block;
   margin-left: 5px;
