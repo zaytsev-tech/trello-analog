@@ -1,4 +1,4 @@
-export type { Board, Card, Column } from './types';
+export type { Board, Card, Column, Comment } from './types';
 export {
   setUsername,
   setHeaderColumnName,
@@ -7,6 +7,7 @@ export {
   addNewComment,
   setDescription,
   deleteCard,
+  deleteComment,
 } from './actions';
 export { userStorageReducer } from './reducers';
 export { Initializer } from './init';

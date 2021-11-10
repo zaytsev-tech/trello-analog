@@ -1,4 +1,4 @@
-import { Board } from './index';
+import { Board } from './types';
 
 export const Initializer = (state: Board): Board => {
   const formData = localStorage.getItem('storage') || '';

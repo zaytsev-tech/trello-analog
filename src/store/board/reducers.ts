@@ -2,19 +2,22 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ActionTypes } from './action-types';
 import { BoardAction } from './action-types';
-import { Board } from './index';
+import { Board } from './types';
 
 export const userStorageReducer = (state: Board, action: BoardAction): Board => {
   switch (action.type) {
     case ActionTypes.setUsername:
-      return { ...state, name: action.item };
+      return { ...state, name: action.payload };
 
     case ActionTypes.setHeaderColumnName:
       return {
         ...state,
         columns: {
           ...state.columns,
-          [action.item]: { ...state.columns[action.item], name: action.value },
+          [action.payload.columnKey]: {
+            ...state.columns[action.payload.columnKey],
+            name: action.payload.value,
+          },
         },
       };
 
@@ -24,13 +27,13 @@ export const userStorageReducer = (state: Board, action: BoardAction): Board => 
         ...state,
         columns: {
           ...state.columns,
-          [action.item]: {
-            ...state.columns[action.item],
+          [action.payload.columnKey]: {
+            ...state.columns[action.payload.columnKey],
             cards: {
-              ...state.columns[action.item].cards,
+              ...state.columns[action.payload.columnKey].cards,
               [newId]: {
                 key: newId,
-                name: action.value,
+                name: action.payload.value,
                 author: state.name,
                 description: '',
                 comments: {},
@@ -105,9 +108,43 @@ export const userStorageReducer = (state: Board, action: BoardAction): Board => 
       };
     }
 
+    case ActionTypes.saveChangesComment:
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          [action.payload.columnKey]: {
+            ...state.columns[action.payload.columnKey],
+            cards: {
+              ...state.columns[action.payload.columnKey].cards,
+              [action.payload.cardKey]: {
+                ...state.columns[action.payload.columnKey].cards[action.payload.cardKey],
+                comments: {
+                  ...state.columns[action.payload.columnKey].cards[action.payload.cardKey]
+                    .comments,
+                  [action.payload.commentKey]: {
+                    ...state.columns[action.payload.columnKey].cards[
+                      action.payload.cardKey
+                    ].comments[action.payload.commentKey],
+                    text: action.payload.value,
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
     case ActionTypes.deleteCard: {
       const newObj = Object.assign({}, state);
       delete newObj.columns[action.payload.columnKey].cards[action.payload.cardKey];
+      return newObj;
+    }
+
+    case ActionTypes.deleteComment: {
+      const newObj = Object.assign({}, state);
+      delete newObj.columns[action.payload.columnKey].cards[action.payload.cardKey]
+        .comments[action.payload.commentKey];
       return newObj;
     }
 

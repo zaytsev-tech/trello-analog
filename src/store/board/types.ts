@@ -23,7 +23,7 @@ export interface Card {
   comments: Record<string, Comment>;
 }
 
-interface Comment {
+export interface Comment {
   key: string;
   author: string;
   text: string;
