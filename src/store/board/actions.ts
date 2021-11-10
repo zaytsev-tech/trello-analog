@@ -2,24 +2,26 @@ import {
   ActionTypes,
   AuthorTextPayload,
   BoardAction,
+  ColumnKeyValue,
+  DeleteCardPayload,
+  DeleteCommentPayload,
   InputTextPayload,
+  SaveCommentPayload,
 } from './action-types';
 
-export const setUsername = (item: string): BoardAction => ({
+export const setUsername = (payload: string): BoardAction => ({
   type: ActionTypes.setUsername,
-  item,
+  payload,
 });
 
-export const setHeaderColumnName = (item: string, value: string): BoardAction => ({
+export const setHeaderColumnName = (payload: ColumnKeyValue): BoardAction => ({
   type: ActionTypes.setHeaderColumnName,
-  item,
-  value,
+  payload,
 });
 
-export const addNewCard = (item: string, value: string): BoardAction => ({
+export const addNewCard = (payload: ColumnKeyValue): BoardAction => ({
   type: ActionTypes.addNewCard,
-  item,
-  value,
+  payload,
 });
 
 export const setNameCard = (payload: InputTextPayload): BoardAction => ({
@@ -34,5 +36,20 @@ export const setDescription = (payload: InputTextPayload): BoardAction => ({
 
 export const addNewComment = (payload: AuthorTextPayload): BoardAction => ({
   type: ActionTypes.addNewComment,
+  payload,
+});
+
+export const deleteCard = (payload: DeleteCardPayload): BoardAction => ({
+  type: ActionTypes.deleteCard,
+  payload,
+});
+
+export const deleteComment = (payload: DeleteCommentPayload): BoardAction => ({
+  type: ActionTypes.deleteComment,
+  payload,
+});
+
+export const saveChangesComment = (payload: SaveCommentPayload): BoardAction => ({
+  type: ActionTypes.saveChangesComment,
   payload,
 });

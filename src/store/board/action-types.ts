@@ -1,15 +1,42 @@
 export enum ActionTypes {
-  setUsername = 'SET_USERNAME',
-  setHeaderColumnName = 'SET_HEADER_COLUMN_NAME',
-  addNewCard = 'ADD_NEW_CARD',
-  setNameCard = 'SET_NAME_CARD',
-  setDescription = 'SET_DESCRIPTION',
-  addNewComment = 'ADD_NEW_COMMENT',
+  setUsername = 'BOARD/SET_USERNAME',
+  setHeaderColumnName = 'BOARD/SET_HEADER_COLUMN_NAME',
+  addNewCard = 'BOARD/ADD_NEW_CARD',
+  setNameCard = 'BOARD/SET_NAME_CARD',
+  setDescription = 'BOARD/SET_DESCRIPTION',
+  addNewComment = 'BOARD/ADD_NEW_COMMENT',
+  deleteCard = 'BOARD/DELETE_CARD',
+  deleteComment = 'BOARD/DELETE_COMMENT',
+  saveChangesComment = 'BOARD/SAVE_CHANGES_COMMENT',
 }
 
 export interface InputTextPayload {
   columnId: string;
   cardId: string;
+  value: string;
+}
+
+export interface DeleteCardPayload {
+  columnKey: string;
+  cardKey: string;
+}
+
+export interface DeleteCommentPayload {
+  columnKey: string;
+  cardKey: string;
+  commentKey: string;
+}
+
+export interface DeleteCommentPayload {
+  columnKey: string;
+  cardKey: string;
+  commentKey: string;
+}
+
+export interface SaveCommentPayload {
+  columnKey: string;
+  cardKey: string;
+  commentKey: string;
   value: string;
 }
 
@@ -20,10 +47,18 @@ export interface AuthorTextPayload {
   value: string;
 }
 
+export interface ColumnKeyValue {
+  columnKey: string;
+  value: string;
+}
+
 export type BoardAction =
-  | { type: ActionTypes.setUsername; item: string }
-  | { type: ActionTypes.addNewCard; item: string; value: string }
+  | { type: ActionTypes.setUsername; payload: string }
+  | { type: ActionTypes.addNewCard; payload: ColumnKeyValue }
   | { type: ActionTypes.setNameCard; payload: InputTextPayload }
   | { type: ActionTypes.setDescription; payload: InputTextPayload }
   | { type: ActionTypes.addNewComment; payload: AuthorTextPayload }
-  | { type: ActionTypes.setHeaderColumnName; item: string; value: string };
+  | { type: ActionTypes.deleteCard; payload: DeleteCardPayload }
+  | { type: ActionTypes.deleteComment; payload: DeleteCommentPayload }
+  | { type: ActionTypes.saveChangesComment; payload: SaveCommentPayload }
+  | { type: ActionTypes.setHeaderColumnName; payload: ColumnKeyValue };
