@@ -28,7 +28,3 @@ export interface Comment {
   author: string;
   text: string;
 }
-
-// export type ActionCard =
-//   | { type: 'ADD_CARD'; item: Card }
-//   | { type: 'DELETE_CARD'; item: Card };

@@ -1,14 +1,15 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { Field, Form } from 'react-final-form';
 import styled from 'styled-components';
 
 import { Comment } from '../../../store/board';
 import { CloseButton, SaveButton } from '../../ui';
+import { currCommentDefaultValues } from './default-values';
 
 interface CurrentCommentProp {
   comment: Comment;
   active: boolean;
-  onSave: (text: string) => void;
+  onSave: (value: Record<string, string>) => void;
   onSetActive: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -18,10 +19,7 @@ export const InputCurrentComment: FC<CurrentCommentProp> = ({
   onSave,
   onSetActive,
 }) => {
-  const [text, setText] = useState(comment.text);
-
   const onClickClose = () => {
-    setText(comment.text);
     onSetActive(false);
   };
 
@@ -29,25 +27,23 @@ export const InputCurrentComment: FC<CurrentCommentProp> = ({
     <>
       <Author>{comment.author}</Author>
       {!active ? (
-        <Text>{text}</Text>
+        <Text>{comment.text}</Text>
       ) : (
         <Form
           onSubmit={onSave}
-          initialValues={{ comment: comment.text }}
+          initialValues={currCommentDefaultValues(comment)}
           render={({ handleSubmit }) => (
-            <Input onSubmit={handleSubmit}>
+            <CommentForm onSubmit={handleSubmit}>
               <Field
                 name="comment"
                 type="text"
                 render={({ input: { value, onChange } }) => (
-                  <>
-                    <TextArea value={value} onChange={onChange} autoFocus />
-                    <Save className={Save} onClick={handleSubmit} />
-                  </>
+                  <TextArea value={value} onChange={onChange} autoFocus />
                 )}
               ></Field>
+              <Save className={Save} onClick={handleSubmit} />
               <CloseButton onClick={onClickClose} />
-            </Input>
+            </CommentForm>
           )}
         ></Form>
       )}
@@ -85,7 +81,7 @@ const TextArea = styled.textarea`
   margin: 5px;
 `;
 
-const Input = styled.form`
+const CommentForm = styled.form`
   position: relative;
   display: inline-block;
   margin-left: 5px;

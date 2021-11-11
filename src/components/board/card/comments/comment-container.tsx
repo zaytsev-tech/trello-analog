@@ -2,8 +2,7 @@ import { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { useBoardContext } from '../../../../context/board';
-import { Comment, deleteComment } from '../../../../store/board';
-import { saveChangesComment } from '../../../../store/board/actions';
+import { Comment, deleteComment, saveChangesComment } from '../../../../store/board';
 import { UserAvatar } from '../../../ui';
 import { ButtonsCommentControl, InputCurrentComment } from '../../../use-case';
 
@@ -23,13 +22,13 @@ export const CommentContainer: FC<CommentProps> = ({ columnKey, cardKey, comment
     );
   };
 
-  const onClickSave = (text: string) => {
+  const onClickSave = (val: Record<string, string>) => {
     dispatch(
       saveChangesComment({
         columnKey: columnKey,
         cardKey: cardKey,
         commentKey: comment.key,
-        value: text,
+        value: val.comment,
       }),
     );
     setActive(false);
