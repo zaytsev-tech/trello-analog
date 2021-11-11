@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
+import { useDispatch, useStore } from 'react-redux';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../../context/board';
 import { addNewComment, Card } from '../../../store/board';
 import { SaveButton, UserAvatar } from '../../ui';
 
@@ -11,7 +11,8 @@ interface CardProp {
 }
 
 export const InputNewComment: FC<CardProp> = ({ columnKey, card }) => {
-  const [state, dispatch] = useBoardContext();
+  const state = useStore().getState();
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [textComment, setTextComment] = useState('');
 

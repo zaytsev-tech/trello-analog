@@ -1,8 +1,6 @@
 import { Dispatch } from 'react';
 
-import { BoardAction } from './action-types';
-
-export type UserContextProps = [Board, Dispatch<BoardAction>];
+//export type UserContextProps = [Board, Dispatch<BoardAction>];
 
 export interface Board {
   name: string;

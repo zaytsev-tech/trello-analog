@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../../context/board';
 import { Card, setNameCard } from '../../../store/board';
 
 interface CardProp {
@@ -12,7 +12,7 @@ interface CardProp {
 }
 
 export const InputHeader: FC<CardProp> = ({ columnKey, card, nameCard, setName }) => {
-  const [, dispatch] = useBoardContext();
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
 
   const onBlurHeader = () => {

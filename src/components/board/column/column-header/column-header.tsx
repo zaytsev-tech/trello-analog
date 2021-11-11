@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { useBoardContext } from '../../../../context/board';
 import { Column, setHeaderColumnName } from '../../../../store/board';
 
 interface ColumnHeaderProps {
@@ -8,7 +8,7 @@ interface ColumnHeaderProps {
 }
 
 export const ColumnHeader: FC<ColumnHeaderProps> = ({ column }) => {
-  const [, dispatch] = useBoardContext();
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [header, setHeader] = useState(column.name);
 

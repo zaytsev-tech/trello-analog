@@ -1,9 +1,9 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { Field, Form } from 'react-final-form';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../../context/board';
-import { setUsername } from '../../../store/board';
+import { setUsername } from '../../../store/board/reducers';
 import { userFormDefaultValues } from './default-values';
 
 interface UserNameProps {
@@ -11,19 +11,15 @@ interface UserNameProps {
 }
 
 export const UserNameForm: FC<UserNameProps> = ({ setActive }) => {
-  const [, dispatch] = useBoardContext();
+  const dispatch = useDispatch();
 
   function onSubmitForm(value: Record<string, string>) {
     if (value.name != '') {
-      saveUsername(value.name);
+      dispatch(setUsername(value.name));
       setActive(false);
     } else {
       alert('Вы не ввели имя.');
     }
-  }
-
-  function saveUsername(name: string) {
-    dispatch(setUsername(name));
   }
 
   return (

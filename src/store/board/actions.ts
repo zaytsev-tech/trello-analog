@@ -1,55 +1,59 @@
-import {
-  ActionTypes,
-  AuthorTextPayload,
-  BoardAction,
-  ColumnKeyValue,
-  DeleteCardPayload,
-  DeleteCommentPayload,
-  InputTextPayload,
-  SaveCommentPayload,
-} from './action-types';
+import { createAction } from '@reduxjs/toolkit';
 
-export const setUsername = (payload: string): BoardAction => ({
-  type: ActionTypes.setUsername,
-  payload,
-});
+// import {
+//   ActionTypes,
+//   AuthorTextPayload,
+//   BoardAction,
+//   ColumnKeyValue,
+//   DeleteCardPayload,
+//   DeleteCommentPayload,
+//   InputTextPayload,
+//   SaveCommentPayload,
+// } from './action-types';
 
-export const setHeaderColumnName = (payload: ColumnKeyValue): BoardAction => ({
-  type: ActionTypes.setHeaderColumnName,
-  payload,
-});
+// export const setUsername = (payload: string): BoardAction => ({
+//   type: ActionTypes.setUsername,
+//   payload,
+// });
 
-export const addNewCard = (payload: ColumnKeyValue): BoardAction => ({
-  type: ActionTypes.addNewCard,
-  payload,
-});
+//export const setUsername = createAction<string>('BOARD/SET_USERNAME');
 
-export const setNameCard = (payload: InputTextPayload): BoardAction => ({
-  type: ActionTypes.setNameCard,
-  payload,
-});
+// export const setHeaderColumnName = (payload: ColumnKeyValue): BoardAction => ({
+//   type: ActionTypes.setHeaderColumnName,
+//   payload,
+// });
 
-export const setDescription = (payload: InputTextPayload): BoardAction => ({
-  type: ActionTypes.setDescription,
-  payload,
-});
+// export const addNewCard = (payload: ColumnKeyValue): BoardAction => ({
+//   type: ActionTypes.addNewCard,
+//   payload,
+// });
 
-export const addNewComment = (payload: AuthorTextPayload): BoardAction => ({
-  type: ActionTypes.addNewComment,
-  payload,
-});
+// export const setNameCard = (payload: InputTextPayload): BoardAction => ({
+//   type: ActionTypes.setNameCard,
+//   payload,
+// });
 
-export const deleteCard = (payload: DeleteCardPayload): BoardAction => ({
-  type: ActionTypes.deleteCard,
-  payload,
-});
+// export const setDescription = (payload: InputTextPayload): BoardAction => ({
+//   type: ActionTypes.setDescription,
+//   payload,
+// });
 
-export const deleteComment = (payload: DeleteCommentPayload): BoardAction => ({
-  type: ActionTypes.deleteComment,
-  payload,
-});
+// export const addNewComment = (payload: AuthorTextPayload): BoardAction => ({
+//   type: ActionTypes.addNewComment,
+//   payload,
+// });
 
-export const saveChangesComment = (payload: SaveCommentPayload): BoardAction => ({
-  type: ActionTypes.saveChangesComment,
-  payload,
-});
+// export const deleteCard = (payload: DeleteCardPayload): BoardAction => ({
+//   type: ActionTypes.deleteCard,
+//   payload,
+// });
+
+// export const deleteComment = (payload: DeleteCommentPayload): BoardAction => ({
+//   type: ActionTypes.deleteComment,
+//   payload,
+// });
+
+// export const saveChangesComment = (payload: SaveCommentPayload): BoardAction => ({
+//   type: ActionTypes.saveChangesComment,
+//   payload,
+// });

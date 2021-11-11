@@ -1,17 +1,19 @@
-import { FC, useEffect, useReducer } from 'react';
+import { configureStore } from '@reduxjs/toolkit';
+import { FC, useEffect } from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import { BoardContext } from '../../context/board';
-import { Initializer, initialState, userStorageReducer } from '../../store/board';
+import { persistProvider } from '../../store/board';
+//import { BoardContext } from '../../context/board';
+
+const { store, persistor } = persistProvider();
 
 export const BoardProvider: FC = ({ children }) => {
-  const stateDispatchStorage = useReducer(userStorageReducer, initialState, Initializer);
-  const [state] = stateDispatchStorage;
-
-  useEffect(() => {
-    localStorage.setItem('storage', JSON.stringify(state));
-  }, [state]);
-
   return (
-    <BoardContext.Provider value={stateDispatchStorage}>{children}</BoardContext.Provider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        {children}
+      </PersistGate>
+    </Provider>
   );
 };

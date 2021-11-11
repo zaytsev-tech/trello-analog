@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, FC, MouseEvent, SetStateAction, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../../context/board';
 import { addNewCard, Column } from '../../../store/board';
 import { CloseButton } from '../../ui';
 
@@ -12,8 +12,8 @@ interface InputProps {
 }
 
 export const InputNameCard: FC<InputProps> = ({ column, active, setActive }) => {
-  const [, dispatch] = useBoardContext();
   const [text, setText] = useState('');
+  const dispatch = useDispatch();
 
   const onBlurTextCard = () => {
     if (text !== '' && active !== false) {

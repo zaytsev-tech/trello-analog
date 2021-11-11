@@ -1,7 +1,8 @@
 import { FC, useState } from 'react';
+import { useStore } from 'react-redux';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../../../context/board';
+//import { useBoardContext } from '../../../../context/board';
 import { Card, selectColumnName } from '../../../../store/board';
 import { CloseButton } from '../../../ui';
 import { DeleteCard, InputHeader } from '../../../use-case';
@@ -13,7 +14,7 @@ interface CardProp {
 }
 
 export const CardHeader: FC<CardProp> = ({ columnKey, card, close }) => {
-  const [state] = useBoardContext();
+  const state = useStore().getState();
   const [nameCard, setName] = useState(card.name);
 
   return (

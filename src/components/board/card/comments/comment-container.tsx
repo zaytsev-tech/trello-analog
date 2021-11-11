@@ -1,7 +1,8 @@
 import { FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../../../context/board';
+//import { useBoardContext } from '../../../../context/board';
 import { Comment, deleteComment, saveChangesComment } from '../../../../store/board';
 import { UserAvatar } from '../../../ui';
 import { ButtonsCommentControl, InputCurrentComment } from '../../../use-case';
@@ -13,7 +14,7 @@ interface CommentProps {
 }
 
 export const CommentContainer: FC<CommentProps> = ({ columnKey, cardKey, comment }) => {
-  const [, dispatch] = useBoardContext();
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
 
   const onClickDelete = () => {

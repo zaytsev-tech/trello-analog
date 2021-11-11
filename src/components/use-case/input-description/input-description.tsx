@@ -1,7 +1,8 @@
 import { FC, useState } from 'react';
+import { useDispatch, useStore } from 'react-redux';
 import styled from 'styled-components';
 
-import { useBoardContext } from '../../../context/board';
+//import { useBoardContext } from '../../../context/board';
 import { Card, selectCardField, setDescription } from '../../../store/board';
 import { CloseButton, SaveButton } from '../../ui';
 
@@ -11,7 +12,8 @@ interface CardProp {
 }
 
 export const InputDescription: FC<CardProp> = ({ columnKey, card }) => {
-  const [state, dispatch] = useBoardContext();
+  const dispatch = useDispatch();
+  const store = useStore();
   const [active, setActive] = useState(false);
   const [textDesc, setTextDesc] = useState(card.description);
 
@@ -23,7 +25,7 @@ export const InputDescription: FC<CardProp> = ({ columnKey, card }) => {
   const clickCancelChanges = () => {
     setTextDesc(
       selectCardField(
-        state,
+        store.getState(),
         { colId: columnKey, cardId: card.key },
         'description',
       ) as string,

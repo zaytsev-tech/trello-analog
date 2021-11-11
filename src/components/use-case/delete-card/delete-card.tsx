@@ -1,6 +1,7 @@
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { useBoardContext } from '../../../context/board';
+//import { useBoardContext } from '../../../context/board';
 import { deleteCard } from '../../../store/board';
 
 interface DelCardProp {
@@ -10,7 +11,7 @@ interface DelCardProp {
 }
 
 export const DeleteCard: FC<DelCardProp> = ({ columnKey, cardKey, close }) => {
-  const [, dispatch] = useBoardContext();
+  const dispatch = useDispatch();
 
   const clickDelCard = () => {
     dispatch(deleteCard({ columnKey: columnKey, cardKey: cardKey }));

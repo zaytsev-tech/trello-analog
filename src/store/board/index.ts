@@ -1,20 +1,19 @@
 export type { Board, Card, Column, Comment } from './types';
 export {
-  setUsername,
+  userStorageSlice,
   setHeaderColumnName,
+  setUsername,
   addNewCard,
   setNameCard,
-  addNewComment,
   setDescription,
+  addNewComment,
+  saveChangesComment,
   deleteCard,
   deleteComment,
-  saveChangesComment,
-} from './actions';
-export { userStorageReducer } from './reducers';
+} from './reducers';
+export { persistProvider } from '../persist';
 export { Initializer } from './init';
 export { initialState } from './state';
-export type { UserContextProps } from './types';
-export type { BoardAction } from './action-types';
 export {
   selectColumnName,
   selectCardField as selectTextDesc,
