@@ -40,7 +40,7 @@ export const InputCurrentComment: FC<CurrentCommentProp> = ({
                 render={({ input: { value, onChange } }) => (
                   <TextArea value={value} onChange={onChange} autoFocus />
                 )}
-              ></Field>
+              />
               <Save className={Save} onClick={handleSubmit} />
               <CloseButton onClick={onClickClose} />
             </CommentForm>

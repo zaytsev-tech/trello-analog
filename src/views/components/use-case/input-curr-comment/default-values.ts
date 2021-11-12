@@ -1,4 +1,4 @@
-import { Comment } from '../../../../../store/board';
+import { Comment } from '../../../../store/board';
 
 export interface CurrCommentDefaultValues {
   comment: string;

@@ -11,16 +11,7 @@ export const userStorageSlice = createSlice({
       state.name = action.payload;
     },
     setHeaderColumnName(state, action) {
-      return {
-        ...state,
-        columns: {
-          ...state.columns,
-          [action.payload.columnKey]: {
-            ...state.columns[action.payload.columnKey],
-            name: action.payload.value,
-          },
-        },
-      };
+      state.columns[action.payload.columnKey].name = action.payload.value;
     },
     addNewCard(state, action) {
       const newId = uuidv4();
@@ -45,40 +36,12 @@ export const userStorageSlice = createSlice({
       };
     },
     setNameCard(state, action) {
-      return {
-        ...state,
-        columns: {
-          ...state.columns,
-          [action.payload.columnId]: {
-            ...state.columns[action.payload.columnId],
-            cards: {
-              ...state.columns[action.payload.columnId].cards,
-              [action.payload.cardId]: {
-                ...state.columns[action.payload.columnId].cards[action.payload.cardId],
-                name: action.payload.value,
-              },
-            },
-          },
-        },
-      };
+      state.columns[action.payload.columnId].cards[action.payload.cardId].name =
+        action.payload.value;
     },
     setDescription(state, action) {
-      return {
-        ...state,
-        columns: {
-          ...state.columns,
-          [action.payload.columnId]: {
-            ...state.columns[action.payload.columnId],
-            cards: {
-              ...state.columns[action.payload.columnId].cards,
-              [action.payload.cardId]: {
-                ...state.columns[action.payload.columnId].cards[action.payload.cardId],
-                description: action.payload.value,
-              },
-            },
-          },
-        },
-      };
+      state.columns[action.payload.columnId].cards[action.payload.cardId].description =
+        action.payload.value;
     },
     addNewComment(state, action) {
       const newId = uuidv4();
@@ -108,31 +71,9 @@ export const userStorageSlice = createSlice({
       };
     },
     saveChangesComment(state, action) {
-      return {
-        ...state,
-        columns: {
-          ...state.columns,
-          [action.payload.columnKey]: {
-            ...state.columns[action.payload.columnKey],
-            cards: {
-              ...state.columns[action.payload.columnKey].cards,
-              [action.payload.cardKey]: {
-                ...state.columns[action.payload.columnKey].cards[action.payload.cardKey],
-                comments: {
-                  ...state.columns[action.payload.columnKey].cards[action.payload.cardKey]
-                    .comments,
-                  [action.payload.commentKey]: {
-                    ...state.columns[action.payload.columnKey].cards[
-                      action.payload.cardKey
-                    ].comments[action.payload.commentKey],
-                    text: action.payload.value,
-                  },
-                },
-              },
-            },
-          },
-        },
-      };
+      state.columns[action.payload.columnKey].cards[action.payload.cardKey].comments[
+        action.payload.commentKey
+      ].text = action.payload.value;
     },
     deleteCard(state, action) {
       delete state.columns[action.payload.columnKey].cards[action.payload.cardKey];

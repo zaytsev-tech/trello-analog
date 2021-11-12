@@ -12,7 +12,6 @@ export {
   deleteComment,
 } from './reducers';
 export { persistProvider } from '../persist';
-export { Initializer } from './init';
 export { initialState } from './state';
 export {
   selectColumnName,

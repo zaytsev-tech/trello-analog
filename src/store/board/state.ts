@@ -1,20 +1,26 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { Board } from './types';
+
+const colId = uuidv4();
+const cardId = uuidv4();
+const commId = uuidv4();
 
 export const initialState = {
   name: '',
   columns: {
-    '0': {
-      key: '0',
+    [colId]: {
+      key: colId,
       name: 'column-test',
       cards: {
-        '0': {
-          key: '0',
+        [cardId]: {
+          key: cardId,
           name: 'card-name',
           author: 'card-author',
           description: 'card-desc',
           comments: {
-            '0': {
-              key: '0',
+            [commId]: {
+              key: commId,
               author: 'comment-author',
               text: 'comment-text',
             },
