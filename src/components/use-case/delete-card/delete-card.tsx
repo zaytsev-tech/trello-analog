@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
-//import { useBoardContext } from '../../../context/board';
 import { deleteCard } from '../../../store/board';
 
 interface DelCardProp {

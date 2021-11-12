@@ -1,7 +1,3 @@
-import { Dispatch } from 'react';
-
-//export type UserContextProps = [Board, Dispatch<BoardAction>];
-
 export interface Board {
   name: string;
   columns: Record<string, Column>;

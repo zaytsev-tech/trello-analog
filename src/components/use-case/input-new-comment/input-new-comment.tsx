@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { addNewComment, Card } from '../../../store/board';
+import { ConfigState } from '../../../store/persist';
 import { SaveButton, UserAvatar } from '../../ui';
 
 interface CardProp {
@@ -11,7 +12,7 @@ interface CardProp {
 }
 
 export const InputNewComment: FC<CardProp> = ({ columnKey, card }) => {
-  const state = useStore().getState();
+  const state = useSelector((state: ConfigState) => state.board);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [textComment, setTextComment] = useState('');

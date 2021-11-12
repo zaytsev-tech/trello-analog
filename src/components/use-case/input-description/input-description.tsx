@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 import { useDispatch, useStore } from 'react-redux';
 import styled from 'styled-components';
 
-//import { useBoardContext } from '../../../context/board';
 import { Card, selectCardField, setDescription } from '../../../store/board';
 import { CloseButton, SaveButton } from '../../ui';
 

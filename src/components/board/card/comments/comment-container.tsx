@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-//import { useBoardContext } from '../../../../context/board';
 import { Comment, deleteComment, saveChangesComment } from '../../../../store/board';
 import { UserAvatar } from '../../../ui';
 import { ButtonsCommentControl, InputCurrentComment } from '../../../use-case';
